@@ -1,0 +1,26 @@
+<ion-view title="Login">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+  		<form name="loginForm" id="loginForm" ng-submit="connect()" form-autofill-fix novalidate>
+	        <div class="list list-inset">
+			  <label class="item item-input" ng-class="{errorInput: showErrorInputUsername}"> 
+			    <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" ng-model="credentials.username">
+			    <i ng-show="showErrorInputUsername" class="icon ion-alert-circled error" style="color:red;margin-right:10px"></i>
+			  </label>
+
+			  <br />
+
+			  <label class="item item-input" ng-class="{errorInput: showErrorInputPassword}">
+			    <input type="password" name="password" id="password" placeholder="Mot de passe" ng-model="credentials.password"> 
+			    <i ng-show="showErrorInputPassword" class="icon ion-alert-circled error" style="color:red;margin-right:10px"></i>
+			  </label>
+			</div>
+
+	        <div class="padding">
+	          <button type="submit" class="button button-block button-positive">Connexion</button>
+	        </div>
+	    </form>
+  </ion-content>
+</ion-view>

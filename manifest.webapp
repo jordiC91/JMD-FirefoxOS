@@ -1,0 +1,10 @@
+{
+  "name": "JMD",
+  "description": "J'ai mon diplôme",
+  "launch_path": "index.html",
+  "developer": {
+    "name": "Jordi CHARPENTIER - Yoann VANHOESERLANDE",
+    "url": "http://www.jordi-charpentier.com"
+  },
+  "default_locale": "fr"
+}
