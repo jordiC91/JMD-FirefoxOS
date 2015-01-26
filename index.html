@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>JMD</title>
+        <title>JMD - Accueil</title>
         <meta name="description" content="J'ai Mon Diplôme">
 
         <!--
@@ -39,17 +39,54 @@
         <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
-       <div data-role="page">
+      <div data-role="page" id="accueil">
          <div data-role="header">
-           <h1>JMD</h1>
+           <h1>JMD - Accueil</h1>
          </div>
          <div data-role="main" class="ui-content">
-           <ul data-role="listview" id="listEtab">
+           <ul data-role="listview" id="listChoixAccueil">
+             <li id="adminLi">Administrateur</li>
+             <li id="etudiantLi">Etudiant</li>
+           </ul>
+         </div>
+       </div>
+      
+      <!-- Administrateur -->
+      
+       <div data-role="page" id="listeEtabAdmin">
+         <div data-role="header">
+           <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1>Etablissements</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <ul data-role="listview" id="listviewEtabAdmin">
 
            </ul>
          </div>
-         <div data-role="footer">
-           <h1>version 0.1</h1>
+       </div>
+      
+       <div data-role="page" id="listeDipbAdmin">
+         <div data-role="header">
+           <h1>Diplômes</h1>
+         </div>
+         <div data-role="main" class="ui-content">
+           <ul data-role="listview" id="listDip">
+
+           </ul>
+         </div>
+       </div>
+      
+      <!-- Etudiant -->
+      
+      <div data-role="page" id="accueilEtudiant">
+         <div data-role="header">
+           <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1>Accueil</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           
          </div>
        </div>
     </body>

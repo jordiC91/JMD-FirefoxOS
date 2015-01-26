@@ -1,7 +1,7 @@
 {
-  "version": "0.2.0",
+  "version": "1.0.0",
   "name": "JMD",
-  "description": "Demonstrates how to use permissions to load remote content",
+  "description": "J'ai Mon Diplôme",
   "launch_path": "/index.html",
   "icons": {
     "16": "/img/icons/icon16x16.png",
@@ -10,8 +10,8 @@
     "128": "/img/icons/icon128x128.png"
   },
   "developer": {
-    "name": "Your name",
-    "url": "http://example.com"
+    "name": "Jordi CHARPENTIER - Yoann VANHOESERLANDE",
+    "url": "http://www.github.com/jordiC91/JMD-FirefoxOS"
   },
   "type": "privileged",
   "permissions": {
