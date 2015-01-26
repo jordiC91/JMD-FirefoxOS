@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>JMD - J'ai Mon Diplôme</title>
+    <head>
+        <meta charset="utf-8">
+        <title>JMD</title>
+        <meta name="description" content="J'ai Mon Diplôme">
 
-	<link rel="stylesheet" href="components/ionic/release/css/ionic.css" />
-	<link rel="stylesheet" href="css/main.css" />
-  </head>
+        <!--
+          viewport allows you to control how mobile browsers will render your content.
+          width=device-width tells mobile browsers to render your content across the
+          full width of the screen, without being zoomed out (by default it would render
+          it at a desktop width, then shrink it to fit.)
+          Read more about it here:
+          https://developer.mozilla.org/Mozilla/Mobile/Viewport_meta_tag
+        -->
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/app.css">
 
-  <body ng-app="jmd" ng-controller="LayoutCtrl as main">
+        <!--
+        Inline JavaScript code is not allowed for privileged and certified apps,
+        due to Content Security Policy restrictions.
+        You can read more about it here: https://developer.mozilla.org/Apps/CSP
+        Plus keeping your JavaScript separated from your HTML is always a good practice!
 
-    <ion-nav-view></ion-nav-view>
+        We're also using the 'defer' attribute. This allows us to tell the browser that
+        it should not wait for this file to load before continuing to load the rest of
+        resources in the page. Then, once everything has been loaded, it will parse and
+        execute the deferred files.
+        Read about defer: https://developer.mozilla.org/Web/HTML/Element/script#attr-defer
+        -->
+        <script type="text/javascript" src="js/app.js" defer></script>
 
-    <script src="conf/config.js"></script>
+        <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
+        <script type="text/javascript" src="js/libs/l10n.js" defer></script>
+        
+        <link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.min.css" />
+  
+        <script src="js/jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+       <div data-role="page">
+         <div data-role="header">
+           <h1>JMD</h1>
+         </div>
+         <div data-role="main" class="ui-content">
+           <ul data-role="listview" id="listEtab">
 
-	<script src="components/jquery-2.1.1.min.js"></script>
-    <script src="components/angular/angular.js"></script>
-    <script src="components/angular-animate/angular-animate.js"></script>
-    <script src="components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="components/ionic/release/js/ionic.js"></script>
-    <script src="components/ionic/release/js/ionic-angular.js"></script>
-    <script src="components/angular-resource/angular-resource.js"></script>
-    <script src="components/ngstorage/ngStorage.js"></script>
-    <script src="components/angular-cookies/angular-cookies.js"></script>
-	
-    <script src="javascript/app.js"></script>
-
-	<script src="javascript/authentification/authentification.js"></script>
-    <script src="javascript/authentification/services/sha256.js"></script>
-    <script src="javascript/authentification/services/authentification.js"></script>
-    <script src="javascript/authentification/services/utilisateur.js"></script>
-    <script src="javascript/authentification/controllers/login.js"></script>
-	
-	<script src="javascript/global/global.js"></script>
-    <script src="javascript/global/controllers/layout.js"></script>
-
-    <script src="javascript/admin/admin.js"></script>
-    <script src="javascript/admin/controllers/accueil.js"></script>
-  </body>
+           </ul>
+         </div>
+         <div data-role="footer">
+           <h1>version 0.1</h1>
+         </div>
+       </div>
+    </body>
 </html>

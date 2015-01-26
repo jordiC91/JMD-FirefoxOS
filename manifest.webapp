@@ -1,10 +1,37 @@
 {
+  "version": "0.2.0",
   "name": "JMD",
-  "description": "J'ai mon diplôme",
-  "launch_path": "index.html",
-  "developer": {
-    "name": "Jordi CHARPENTIER - Yoann VANHOESERLANDE",
-    "url": "http://www.jordi-charpentier.com"
+  "description": "Demonstrates how to use permissions to load remote content",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "/img/icons/icon16x16.png",
+    "48": "/img/icons/icon48x48.png",
+    "60": "/img/icons/icon60x60.png",
+    "128": "/img/icons/icon128x128.png"
   },
-  "default_locale": "fr"
+  "developer": {
+    "name": "Your name",
+    "url": "http://example.com"
+  },
+  "type": "privileged",
+  "permissions": {
+    "systemXHR": {
+      "description": "Required to load remote content"
+    }
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "locales": {
+    "es": {
+      "name": "Aplicación privilegiada",
+      "description": "Demuestra cómo utilizar permisos para cargar contenido remoto",
+      "permissions": {
+        "systemXHR": {
+          "description": "Requerido para cargar contenido remoto"
+        }
+      }
+    }
+  },
+  "default_locale": "en"
 }

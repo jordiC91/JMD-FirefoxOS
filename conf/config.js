@@ -1,1 +1,0 @@
-var webservicesURL = "http://ns3281017.ip-5-39-94.eu:8080/JMD/webresources/";
