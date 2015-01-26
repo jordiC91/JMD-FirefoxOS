@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', function() {
     
     $("#listChoixAccueil").click(function(event) {
         if (event.target.id.indexOf("adminLi") > -1) {
-          $.mobile.changePage("#listeEtabAdmin", { transition: "slideup", changeHash: false });
+          $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
         }
         
         if (event.target.id.indexOf("etudiantLi") > -1) {
@@ -12,10 +12,36 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Administrateur.
+    
+    /* Connexion. */
+    
+    $("#btnConnexion").click(function(event) {        
+        $.mobile.changePage("#favoriAdmin", { transition: "slideup", changeHash: false });
+    });
+    
+    /* Accueil. */
+    
+    $("#favoriAdmin").on("swipeleft", function() {
+        $.mobile.changePage("#etabAdmin", { changeHash: false });
+    });
+    
+    $("#etabAdmin").on("swipeleft", function() {
+        $.mobile.changePage("#diplomesAdmin", { changeHash: false });
+    });
+    
+    $("#etabAdmin").on("swiperight", function() {
+        $.mobile.changePage("#favoriAdmin", { changeHash: false });
+    });
+    
+    $("#diplomesAdmin").on("swiperight", function() {
+        $.mobile.changePage("#etabAdmin", { changeHash: false });
+    });
+    
     /* Liste des établissements. */
     
     $.get("http://5.39.94.146:8080/JMD/webresources/etablissement/getAll", function(datas) {
-        for (var i = 0; i < datas.length; i++) {
+        for (var i = 0; i < datas.length; i++) {            
           $("#listviewEtabAdmin").append("<li>" + datas[i].nom + "<br>" + "<p>" + datas[i].ville + "</p>" + "</li>");
         }
         
@@ -26,8 +52,26 @@ window.addEventListener('DOMContentLoaded', function() {
     
     $.get("http://5.39.94.146:8080/JMD/webresources/diplome/getAll", function(datas) {
         for (var i = 0; i < datas.length; i++) {
-          $("#listDiplomeAdmin").append("<li>" + datas[i].nom + "</li>");
-          $("#listDiplomeAdmin").listview("refresh");
+          $("#listviewDipAdmin").append("<li>" + datas[i].nom + "</li>");
         }
+        
+        $("#listviewDipAdmin").listview("refresh");
     });
+    
+    $("#listviewDipAdmin").click(function(event) {        
+        $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
+    });
+    
+    /* Liste des années. */
+    
+    
+    
+    /* Liste des UE. */
+    
+    
+    
+    /* Liste des matières. */
+    
+    
+    
 });

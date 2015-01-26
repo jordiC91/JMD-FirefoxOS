@@ -5,29 +5,9 @@
         <title>JMD - Accueil</title>
         <meta name="description" content="J'ai Mon Diplôme">
 
-        <!--
-          viewport allows you to control how mobile browsers will render your content.
-          width=device-width tells mobile browsers to render your content across the
-          full width of the screen, without being zoomed out (by default it would render
-          it at a desktop width, then shrink it to fit.)
-          Read more about it here:
-          https://developer.mozilla.org/Mozilla/Mobile/Viewport_meta_tag
-        -->
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/app.css">
 
-        <!--
-        Inline JavaScript code is not allowed for privileged and certified apps,
-        due to Content Security Policy restrictions.
-        You can read more about it here: https://developer.mozilla.org/Apps/CSP
-        Plus keeping your JavaScript separated from your HTML is always a good practice!
-
-        We're also using the 'defer' attribute. This allows us to tell the browser that
-        it should not wait for this file to load before continuing to load the rest of
-        resources in the page. Then, once everything has been loaded, it will parse and
-        execute the deferred files.
-        Read about defer: https://developer.mozilla.org/Web/HTML/Element/script#attr-defer
-        -->
         <script type="text/javascript" src="js/app.js" defer></script>
 
         <link rel="prefetch" type="application/l10n" href="data/locales.ini" />
@@ -40,11 +20,12 @@
     </head>
     <body>
       <div data-role="page" id="accueil">
-         <div data-role="header">
-           <h1>JMD - Accueil</h1>
+         <div data-role="header" style="background:#FF5E3A">
+           <h1 style="color:white">JMD - Accueil</h1>
          </div>
          <div data-role="main" class="ui-content">
            <ul data-role="listview" id="listChoixAccueil">
+             <li><center><b>Qui êtes-vous ?</b></center></li>
              <li id="adminLi">Administrateur</li>
              <li id="etudiantLi">Etudiant</li>
            </ul>
@@ -52,37 +33,156 @@
        </div>
       
       <!-- Administrateur -->
-      
-      <div data-role="page" id="listeFavAdmin">
-         <div data-role="header">
-           <h1>Favoris</h1>
-         </div>
-         <div data-role="main" class="ui-content">
-           <ul data-role="listview" id="listFav">
+	
+      <div data-role="page" id="favoriAdmin">
+            <div data-role="header" style="background:#FF5E3A">
+              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+              <h1 style="color:white">Favoris</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+             <ul data-role="listview" id="listviewFavAdmin">
 
-           </ul>
-         </div>
-       </div>
+             </ul>
+            </div>
+      </div>
+        
+      <div data-role="page" id="etabAdmin">
+            <div data-role="header" style="background:#FF5E3A">
+              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+              <h1 style="color:white">Etablissements</h1>
+              <a href="#createEtabAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+            </div>
+            <div data-role="main" class="ui-content">
+              <ul data-role="listview" id="listviewEtabAdmin">
+
+              </ul>
+            </div>
+      </div>
+          
+      <div data-role="page" id="diplomesAdmin">
+            <div data-role="header" style="background:#FF5E3A">
+              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+              <h1 style="color:white">Diplômes</h1>
+              <a href="#createDiplomeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+            </div>
+            <div data-role="main" class="ui-content">
+              <ul data-role="listview" id="listviewDipAdmin">
+
+              </ul>
+            </div>
+      </div>
       
-       <div data-role="page" id="listeEtabAdmin">
-         <div data-role="header">
+      <div data-role="page" id="connexion">
+         <div data-role="header" style="background:#FF5E3A">
            <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1>Etablissements</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+           <h1 style="color:white">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
-           <ul data-role="listview" id="listviewEtabAdmin">
+            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" value="" name="pseudo"></input>
+            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Password" value="" name="password"></input>
+            
+            <button id="btnConnexion">Connexion</button>
+         </div>
+      </div>
+      
+      <!-- Création -->
+      
+      <div data-role="page" id="createEtabAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#etabAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Création</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
+             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" value="" name="nom"></input>
+             <input id="ville" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Ville" value="" name="ville"></input>
+           </div>
+         </div>
+       </div>
+      
+      <div data-role="page" id="createDiplomeAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Création</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
+             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" value="" name="nom"></input>
+           </div>
+         </div>
+       </div>
+      
+      <div data-role="page" id="createAnneeAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Création</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           
+         </div>
+       </div>
+      
+      <div data-role="page" id="createUEAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Création</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           
+         </div>
+       </div>
+      
+      <div data-role="page" id="createMatiereAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#listeMatAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Création</h1>
+           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           
+         </div>
+       </div>
+      
+      <!-- Listing -->
+      
+      <div data-role="page" id="listeAnneeAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Années</h1>
+           <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <ul data-role="listview" id="listviewAnnAdmin">
 
            </ul>
          </div>
        </div>
       
-       <div data-role="page" id="listeDipbAdmin">
-         <div data-role="header">
-           <h1>Diplômes</h1>
+      <div data-role="page" id="listeUEAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">UE</h1>
+           <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
-           <ul data-role="listview" id="listDip">
+           <ul data-role="listview" id="listviewUEAdmin">
+
+           </ul>
+         </div>
+       </div>
+      
+      <div data-role="page" id="listeMatAdmin">
+         <div data-role="header" style="background:#FF5E3A">
+           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <h1 style="color:white">Matières</h1>
+           <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <ul data-role="listview" id="listviewMatAdmin">
 
            </ul>
          </div>
@@ -91,9 +191,9 @@
       <!-- Etudiant -->
       
       <div data-role="page" id="accueilEtudiant">
-         <div data-role="header">
+         <div data-role="header" style="background:#FF5E3A">
            <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1>Accueil</h1>
+           <h1 style="color:white">Accueil</h1>
            <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
