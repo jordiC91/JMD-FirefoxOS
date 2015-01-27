@@ -47,3 +47,35 @@ input, button, code, p {
   margin-top: -3rem;
   content: '';
 }
+
+#adminChoice{
+  background-color: rgb(255,94,58);
+    color:white;
+    font-size: 1em;
+    float: left;
+  width: 40%;
+  padding: 0.7em 0.7em;
+}
+
+#etudiantChoice {
+  background-color: rgb(255,94,58);
+  color:white;
+  font-size: 1em;
+  float: left;
+  width: 40%;
+    padding: 0.7em 0.7em;
+}
+
+#whoAreYou {
+  text-align: center;
+}
+
+#logoJMD {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+
+

@@ -2,16 +2,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Accueil. */
     
-    $("#listChoixAccueil").click(function(event) {
-        if (event.target.id.indexOf("adminLi") > -1) {
-          $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
-        }
-        
-        if (event.target.id.indexOf("etudiantLi") > -1) {
-          $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
-        }
+    $("#adminChoice").click(function(event){
+        $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
     });
     
+     $("#etudiantChoice").click(function(event){
+        $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
+    });
+   
     // Administrateur.
     
     /* Connexion. */
