@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <title>JMD - Accueil</title>
-      <meta name="theme-color" content="rgb(255,94,58)">
-
-        <meta name="description" content="J'ai Mon Diplôme">
-        <meta name="viewport" content="width=device-width">
-        
-        <link rel="prefetch" type="application/l10n" href="data/locales.ini" />      
+        <meta name="theme-color" content="rgb(255,94,58)" />
+      
+        <meta name="description" content="J'ai Mon Diplôme" />
+        <meta name="viewport" content="width=device-width" />
+            
         <link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.min.css" />
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/app.css" />
     </head>
     <body>
+
+      <!-- Accueil -->
+
       <div data-role="page" id="accueil">
-         <div data-role="header" style="background:#FF5E3A">
-           <h1 style="color:white">JMD - Accueil</h1>
-         </div>
-         <div data-role="main" class="ui-content">
-           <img id="logoJMD" src="img/icons/icon128x128.png" alt="Logo JMD" />
-           <h4 id="whoAreYou">Qui êtes vous ?</h4>
-           <p id="homeButtons">
-             <a href="#" class="ui-btn ui-corner-all" id="adminChoice">Administrateur</a>
-             <a href="#" class="ui-btn ui-corner-all" id="etudiantChoice">Etudiant</a>
-           <p id="rememberChoice">Se souvenir de mon choix</p>
-           </p>
-         </div>
+          <div data-role="header" class="headerTabs">
+            <h1 style="color:white">JMD - Accueil</h1>
+          </div>
+          <div data-role="main" class="ui-content">
+            <img id="logoJMD" src="img/icons/icon128x128.png" alt="Logo JMD" />
+            <h4 id="whoAreYou">Qui êtes vous ?</h4>
+            <p id="homeButtons">
+              <a href="#" class="ui-btn ui-corner-all" id="adminChoice">Administrateur</a>
+              <a href="#" class="ui-btn ui-corner-all" id="etudiantChoice">Etudiant</a>
+              <p id="rememberChoice">Se souvenir de mon choix</p>
+            </p>
+          </div>
        </div>
       
       <!-- Administrateur -->
 	
       <div data-role="page" id="favoriAdmin">
-            <div data-role="header" style="background:#FF5E3A">
+            <div data-role="header" class="headerTabs">
               <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 style="color:white">Favoris</h1>
+              <h1 class="headerTextTabs">Favoris</h1>
             </div>
             <div data-role="main" class="ui-content">
              <ul data-role="listview" id="listviewFavAdmin">
@@ -43,9 +45,9 @@
       </div>
         
       <div data-role="page" id="etabAdmin">
-            <div data-role="header" style="background:#FF5E3A">
+            <div data-role="header" class="headerTabs">
               <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 style="color:white">Etablissements</h1>
+              <h1 class="headerTextTabs">Etablissements</h1>
               <a href="#createEtabAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
             </div>
             <div data-role="main" class="ui-content">
@@ -56,9 +58,9 @@
       </div>
           
       <div data-role="page" id="diplomesAdmin">
-            <div data-role="header" style="background:#FF5E3A">
+            <div data-role="header" class="headerTabs">
               <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 style="color:white">Diplômes</h1>
+              <h1 class="headerTextTabs">Diplômes</h1>
               <a href="#createDiplomeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
             </div>
             <div data-role="main" class="ui-content">
@@ -69,13 +71,13 @@
       </div>
       
       <div data-role="page" id="connexion">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Connexion</h1>
+           <h1 class="headerTextTabs">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
-            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" value="" name="pseudo"></input>
-            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Password" value="" name="password"></input>
+            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
+            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Password" name="password" />
             
             <button id="btnConnexion">Connexion</button>
          </div>
@@ -84,37 +86,37 @@
       <!-- Création -->
       
       <div data-role="page" id="createEtabAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#etabAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Création</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <h1 class="headerTextTabs">Création</h1>
+           <a id="btnCreateEtabAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
          </div>
          <div data-role="main" class="ui-content">
            <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
-             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" value="" name="nom"></input>
-             <input id="ville" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Ville" value="" name="ville"></input>
+             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+             <input id="ville" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Ville" name="ville" />
            </div>
          </div>
        </div>
       
       <div data-role="page" id="createDiplomeAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Création</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <h1 class="headerTextTabs">Création</h1>
+           <a id="btnCreateDipAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
          </div>
          <div data-role="main" class="ui-content">
            <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
-             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" value="" name="nom"></input>
+             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
            </div>
          </div>
        </div>
       
       <div data-role="page" id="createAnneeAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Création</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <h1 class="headerTextTabs">Création</h1>
+           <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
          </div>
          <div data-role="main" class="ui-content">
            
@@ -122,10 +124,10 @@
        </div>
       
       <div data-role="page" id="createUEAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Création</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <h1 class="headerTextTabs">Création</h1>
+           <a id="btnCreateUEAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
          </div>
          <div data-role="main" class="ui-content">
            
@@ -133,10 +135,10 @@
        </div>
       
       <div data-role="page" id="createMatiereAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#listeMatAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Création</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <h1 class="headerTextTabs">Création</h1>
+           <a id="btnCreateMatAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
          </div>
          <div data-role="main" class="ui-content">
            
@@ -146,9 +148,9 @@
       <!-- Listing -->
       
       <div data-role="page" id="listeAnneeAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Années</h1>
+           <h1 class="headerTextTabs">Années</h1>
            <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
@@ -159,9 +161,9 @@
        </div>
       
       <div data-role="page" id="listeUEAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">UE</h1>
+           <h1 class="headerTextTabs">UE</h1>
            <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
@@ -172,9 +174,9 @@
        </div>
       
       <div data-role="page" id="listeMatAdmin">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Matières</h1>
+           <h1 class="headerTextTabs">Matières</h1>
            <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
@@ -187,9 +189,9 @@
       <!-- Etudiant -->
       
       <div data-role="page" id="accueilEtudiant">
-         <div data-role="header" style="background:#FF5E3A">
+         <div data-role="header" class="headerTabs">
            <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 style="color:white">Accueil</h1>
+           <h1 class="headerTextTabs">Accueil</h1>
            <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
          </div>
          <div data-role="main" class="ui-content">
@@ -201,7 +203,8 @@
         <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/sha256.js"></script>
         <script src="js/config.js"></script>
-        <script src="js/libs/l10n.js" defer></script>
-        <script src="js/app.js" defer></script>
+        <script src="js/global.js"></script>
+        <script src="js/admin.js"></script>
+        <script src="js/etudiant.js"></script>
     </body>
 </html>
