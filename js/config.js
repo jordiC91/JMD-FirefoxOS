@@ -1,0 +1,1 @@
+var REST_API_URL = "http://5.39.94.146:8080/JMD/webresources/";
