@@ -60,37 +60,91 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Création d'un établissement. */
 
-    $("#btnCreateEtabAdmin").click(function(event){
-        
+    $("#btnCreateEtabAdmin").click(function(event) {
+        var nom = $("#nomEtab").val();
+        var ville = $("#ville").val();
+
+        $.ajax({
+           url: REST_API_URL + 'etablissement?nom=' + nom + "&ville=" + ville + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+           type: 'PUT',
+           success: function(result) {
+             alert('Etablissement créé.');
+             $.mobile.changePage("#etabAdmin", { transition: "slideup", changeHash: false });
+           }
+        });
     });
 
     /* Création d'un diplôme. */
 
-    $("#btnCreateDipAdmin").click(function(event){
-        
+    $("#btnCreateDipAdmin").click(function(event) {
+        var nom = $("#nomDip").val();
+
+        $.ajax({
+           url: REST_API_URL + 'diplome?nom=' + nom + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+           type: 'PUT',
+           success: function(result) {
+             alert('Diplôme créé.');
+             $.mobile.changePage("#diplomesAdmin", { transition: "slideup", changeHash: false });
+           }
+        });
     });
 
     /* Création d'une année. */
 
-    $("#btnCreateAnnAdmin").click(function(event){
-        
+    $("#btnCreateAnnAdmin").click(function(event) {
+        var nom = $("#nomAnn").val();
+        var etablissement = $("#etabAnnee").val();
+        var isLastYear = $("#isLastYear").val();
+
+        $.ajax({
+           url: REST_API_URL + 'annee?nom=' + nom + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+           type: 'PUT',
+           success: function(result) {
+             alert('Année créée.');
+             $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
+           }
+        });
     });
 
     /* Création d'une UE. */
 
-    $("#btnCreateUEAdmin").click(function(event){
-        
+    $("#btnCreateUEAdmin").click(function(event) {
+        var nom = $("#nomUE").val();
+        var nbOptionsMini = $("#nbOptionsMini").val();
+        var moyenneMini = $("#moyenneMini").val();
+
+        $.ajax({
+           url: REST_API_URL + 'ue?nom=' + nom + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+           type: 'PUT',
+           success: function(result) {
+             alert('UE créée.');
+             $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
+           }
+        });
     });
 
     /* Création d'une matière. */
 
-    $("#btnCreateMatAdmin").click(function(event){
-        
+    $("#btnCreateMatAdmin").click(function(event) {
+        var nom = $("#nomMat").val();
+        var coeff = $("#coeffMat").val();
+        var isOption = $("#isOption").val();
+        var noteMini = $("#noteMiniMat").val();
+        var isRattrapable = $("#isRattrapable").val();
+
+        $.ajax({
+           url: REST_API_URL + 'matiere?nom=' + nom + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+           type: 'PUT',
+           success: function(result) {
+             alert('Année créée.');
+             $.mobile.changePage("#listeMatAdmin", { transition: "slideup", changeHash: false });
+           }
+        });
     });
     
     /* Liste des favoris. */
     
-    $(document).on("pageinit","#favoriAdmin",function() {
+    $(document).on("pageshow","#favoriAdmin", function() {
        initFavAdmin();
     });
     
@@ -99,7 +153,15 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewFavAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {            
-              $("#listviewFavAdmin").append("<li>" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
+              $("#listviewFavAdmin").append("<li id=" + datas[i].idAnnee + ">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
+            
+              $("#" + datas[i].idAnnee).click(function(event) {
+                localStorage.setItem("idDiplome", this.id);
+
+                setTimeout(function() { 
+                    $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
+                }, 100);
+              });
             }
 
             $("#listviewFavAdmin").listview("refresh");
@@ -108,7 +170,8 @@ window.addEventListener('DOMContentLoaded', function() {
             if (errorThrown.indexOf("Unauthorized") > -1) {
                 deconnexion();
             } else {
-                alert("Erreur inconnue.");
+                console.log(textStatus);
+                console.log(errorThrown);
             }
          }); 
     };
@@ -130,7 +193,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewEtabAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            alert("Erreur.");
+            console.log(textStatus);
+            console.log(errorThrown);
         }); 
     };
     
@@ -151,24 +215,27 @@ window.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem("idDiplome", this.id);
 
                 setTimeout(function() { 
-                    $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
+                  $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
                 }, 100);
+              });
+
+              $("#" + datas[i].idDiplome).bind("taphold", function (event) {
+                alert("Suppression");
               });
             }
 
             $("#listviewDipAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            alert("Erreur.");
+            console.log(textStatus);
+            console.log(errorThrown);
         }); 
     };
     
     /* Liste des années. */
 
     $(document).on("pageshow","#listeAnneeAdmin", function(e, data) {
-       var idDip = localStorage.getItem("idDiplome");
-       initAnnAdmin(idDip);
-       localStorage.setItem("idDiplome", null);
+       initAnnAdmin(localStorage.getItem("idDiplome"));
     });
     
     function initAnnAdmin(idDip) {
@@ -187,19 +254,22 @@ window.addEventListener('DOMContentLoaded', function() {
               });
             }
 
+            if (datas.length == 0) {
+              $("#listviewAnnAdmin").append("<li>Aucune année</li>");
+            } 
+
             $("#listviewAnnAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            alert("Erreur.");
+            console.log(textStatus);
+            console.log(errorThrown);
         }); 
     };
     
     /* Liste des UE. */
     
     $(document).on("pageshow","#listeUEAdmin", function() {
-       var idAnnee = localStorage.getItem("idAnnee");
-       initUEAdmin(idAnnee);
-       localStorage.setItem("idAnnee", null);
+       initUEAdmin(localStorage.getItem("idAnnee"));
     });
     
     function initUEAdmin(idAnnee) {
@@ -215,19 +285,22 @@ window.addEventListener('DOMContentLoaded', function() {
               });
             }
 
+            if (datas.length == 0) {
+              $("#listviewUEAdmin").append("<li>Aucune UE</li>");
+            } 
+
             $("#listviewUEAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            alert("Erreur.");
+            console.log(textStatus);
+            console.log(errorThrown);
         }); 
     };
     
     /* Liste des matières. */
     
     $(document).on("pageshow","#listeMatAdmin",function() {
-       var idUE = localStorage.getItem("idUE");
-       initMatAdmin(idUE);
-       localStorage.setItem("idUE", null);
+       initMatAdmin(localStorage.getItem("idUE"));
     });
     
     function initMatAdmin(idUE) {
@@ -238,10 +311,15 @@ window.addEventListener('DOMContentLoaded', function() {
               $("#listviewMatAdmin").append("<li id=" + datas[i].idMatiere + ">" + datas[i].nom + "</li>");
             }
 
+            if (datas.length == 0) {
+              $("#listviewMatAdmin").append("<li>Aucune matière</li>");
+            } 
+
             $("#listviewMatAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            alert("Erreur.");
+            console.log(textStatus);
+            console.log(errorThrown);
         }); 
     };
     

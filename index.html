@@ -34,8 +34,8 @@
 	
       <div data-role="page" id="favoriAdmin">
             <div data-role="header" class="headerTabs">
-              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 class="headerTextTabs">Favoris</h1>
+              <a href="#accueil" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground">&lt;</a>
+              <h1 class="headerTextTabs">Liste des favoris</h1>
             </div>
             <div data-role="main" class="ui-content">
              <ul data-role="listview" id="listviewFavAdmin">
@@ -46,9 +46,9 @@
         
       <div data-role="page" id="etabAdmin">
             <div data-role="header" class="headerTabs">
-              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 class="headerTextTabs">Etablissements</h1>
-              <a href="#createEtabAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+              <a href="#accueil" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+              <h1 class="headerTextTabs">Liste des établissements</h1>
+              <a href="#createEtabAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
             </div>
             <div data-role="main" class="ui-content">
               <ul data-role="listview" id="listviewEtabAdmin">
@@ -59,9 +59,9 @@
           
       <div data-role="page" id="diplomesAdmin">
             <div data-role="header" class="headerTabs">
-              <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-              <h1 class="headerTextTabs">Diplômes</h1>
-              <a href="#createDiplomeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+              <a href="#accueil" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+              <h1 class="headerTextTabs">Liste des diplômes</h1>
+              <a href="#createDiplomeAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground">+</a>
             </div>
             <div data-role="main" class="ui-content">
               <ul data-role="listview" id="listviewDipAdmin">
@@ -72,7 +72,7 @@
       
       <div data-role="page" id="connexion">
          <div data-role="header" class="headerTabs">
-           <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <a href="#accueil" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
@@ -87,13 +87,13 @@
       
       <div data-role="page" id="createEtabAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#etabAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Création</h1>
-           <a id="btnCreateEtabAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <a href="#etabAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Nouvel établissement</h1>
+           <a id="btnCreateEtabAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
            <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
-             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+             <input id="nomEtab" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
              <input id="ville" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Ville" name="ville" />
            </div>
          </div>
@@ -101,47 +101,63 @@
       
       <div data-role="page" id="createDiplomeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Création</h1>
-           <a id="btnCreateDipAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Nouveau diplôme</h1>
+           <a id="btnCreateDipAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
            <div class="ui-field-contain ui-body ui-br" data-role="fieldcontain">
-             <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+             <input id="nomDip" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
            </div>
          </div>
        </div>
       
       <div data-role="page" id="createAnneeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Création</h1>
-           <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Nouvelle année</h1>
+           <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-           
+           <input id="etabAnnee" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Etablissement" name="etabAnnee" />
+           <input id="nomAnn" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+           <input type="checkbox" name="isLastYear" id="isLastYear" class="custom" />
+           <label for="isLastYear">Dernière année du diplôme</label>
+           <select name="decoupageAnnee" id="decoupageAnnee">
+            <option value="aucun">Aucun</option>
+            <option value="semestre">Semestre</option>
+            <option value="trimestre">Trimestre</option>
+           </select>
          </div>
        </div>
       
       <div data-role="page" id="createUEAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Création</h1>
-           <a id="btnCreateUEAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Nouvelle UE</h1>
+           <a id="btnCreateUEAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-           
+           <input id="nomUE" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+           <input id="nbOptionsMini" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nombre d'option(s) minimum" name="nbOptionsMini" />
+           <input id="moyenneMini" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Moyenne minimale" name="moyenneMini" />
          </div>
        </div>
       
       <div data-role="page" id="createMatiereAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeMatAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Création</h1>
-           <a id="btnCreateMatAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+           <a href="#listeMatAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Nouvelle matière</h1>
+           <a id="btnCreateMatAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-           
+           <input id="nomMat" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nomMat" />
+           <input id="coeffMat" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="coeffMat" />
+           <input type="checkbox" name="isOption" id="isOption" class="custom" />
+           <label for="isOption">Option</label>
+           <input id="noteMiniMat" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Note minimale" name="noteMiniMat" />
+           <input type="checkbox" checked="true" name="isRattrapable" id="isRattrapable" class="custom" />
+           <label for="isRattrapable">Rattrapable</label>
          </div>
        </div>
       
@@ -149,9 +165,9 @@
       
       <div data-role="page" id="listeAnneeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <a href="#diplomesAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">Années</h1>
-           <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+           <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
            <ul data-role="listview" id="listviewAnnAdmin">
@@ -162,9 +178,9 @@
       
       <div data-role="page" id="listeUEAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">UE</h1>
-           <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+           <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
            <ul data-role="listview" id="listviewUEAdmin">
@@ -175,9 +191,9 @@
       
       <div data-role="page" id="listeMatAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
+           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">Matières</h1>
-           <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
+           <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
            <ul data-role="listview" id="listviewMatAdmin">

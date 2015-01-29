@@ -65,3 +65,12 @@ input, button, code, p {
   margin-right: auto;
   display: block;
 }
+
+.btnBackground {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.ui-header .ui-title {
+    margin-right: 10%;
+    margin-left: 10%;
+}
