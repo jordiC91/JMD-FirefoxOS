@@ -24,12 +24,39 @@ input, button, code, p {
   font-size: inherit;
 }
 
+.ui-header .ui-title {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
 .headerTabs {
   background-color: rgb(255,94,58) !important;
 }
 
 .headerTextTabs {
   color: white;
+}
+
+.boutonJMD {
+  background-color: rgb(255,94,58) !important;
+  color:white !important;
+}
+
+.btnBackground {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.h3Connexion {
+  text-align: center !important;
+}
+
+.connexionLink {
+  color: black !important;
+  text-decoration: none;
+}
+
+#links {
+  text-align: center;
 }
 
 #homeButtons {
@@ -64,13 +91,4 @@ input, button, code, p {
   margin-left: auto;
   margin-right: auto;
   display: block;
-}
-
-.btnBackground {
-  background-color: rgba(0, 0, 0, 0) !important;
-}
-
-.ui-header .ui-title {
-    margin-right: 10%;
-    margin-left: 10%;
 }

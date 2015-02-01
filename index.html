@@ -76,10 +76,46 @@
            <h1 class="headerTextTabs">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
+            <h3 class="h3Connexion">Connectez-vous à votre compte Administrateur</h3>
+
             <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
-            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Password" name="password" />
+            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Mot de passe" name="password" />
             
-            <button id="btnConnexion">Connexion</button>
+            <a id="btnConnexion" class="ui-btn ui-nodisc-icon boutonJMD">Se connecter</a>
+            <br>
+
+            <div id="links">
+              <a href="#inscription" id="inscription" class="connexionLink">Inscription</a>
+              <br>
+              <a id="mdpOublie" href="#mdpOublie" class="connexionLink">Mot de passe oublié ?</a>
+            </div>
+         </div>
+      </div>
+
+      <div data-role="page" id="inscription">
+         <div data-role="header" class="headerTabs">
+           <a href="#connexion" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Inscription</h1>
+           <a id="btnInscriptionValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+         </div>
+         <div data-role="main" class="ui-content">
+            <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+            <input id="prenom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Prénom" name="prenom" />
+            <input id="email" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Email" name="email" />
+            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
+            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Mot de passe" name="password" />
+            <input id="passwordAgain" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Retapez votre mot de passe" name="passwordAgain" />
+         </div>
+      </div>
+
+      <div data-role="page" id="mdpOublie">
+         <div data-role="header" class="headerTabs">
+           <a href="#connexion" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <h1 class="headerTextTabs">Mot de passe oublié ?</h1>
+           <a id="btnPasswordOublieValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+         </div>
+         <div data-role="main" class="ui-content">
+            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
          </div>
       </div>
       
@@ -220,7 +256,9 @@
         <script src="js/sha256.js"></script>
         <script src="js/config.js"></script>
         <script src="js/global.js"></script>
-        <script src="js/admin.js"></script>
+        <script src="js/admin/admin.js"></script>
+        <script src="js/admin/admin-creation.js"></script>
+        <script src="js/admin/admin-listing.js"></script>
         <script src="js/etudiant.js"></script>
     </body>
 </html>
