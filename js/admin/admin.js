@@ -57,15 +57,15 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Inscription. */
 
     $("#btnInscriptionValider").click(function(event) {
-        var nom = $("#nom").val();
-        var prenom = $("#prenom").val();
-        var email = $("#email").val();
-        var pseudo = $("#pseudo").val();
-        var password = $("#password").val();
-        var passwordAgain = $("#passwordAgain").val();  
+        var nom = $("#nomI").val();
+        var prenom = $("#prenomI").val();
+        var email = $("#emailI").val();
+        var pseudo = $("#pseudoI").val();
+        var password = $("#passwordI").val();
+        var passwordAgain = $("#passwordAgainI").val();  
 
         if ((nom.length > 0) && (prenom.length > 0) && (email.length > 0) && (pseudo.length > 0) && (password.length > 0) && (passwordAgain.length > 0)) {
-          if (password.valueOf() != passwordAgain.valueOf()) {
+          if (password == passwordAgain) {
             $.get(REST_API_URL + "admin/subscription?nom=" + nom + "&prenom=" + prenom + "&email=" + email + "&pseudo=" + pseudo + "&password=" + password, function(datas) {
                 alert('Succès de l\'inscription.\nCompte en attente de validation');
                 $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Mot de passe oublié. */
 
     $("#btnPasswordOublieValider").click(function(event) {
-        var pseudo = $("#pseudo").val();
+        var pseudo = $("#pseudoM").val();
 
         if (pseudo.length > 0) {
           $.get(REST_API_URL + "admin/passwordOublie?pseudo=" + pseudo, function(datas) {

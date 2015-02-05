@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
-    
+
     /* Accueil. */
     
     $("#adminChoice").click(function(event){

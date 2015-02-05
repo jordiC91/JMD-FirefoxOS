@@ -1,12 +1,15 @@
 window.addEventListener('DOMContentLoaded', function() {
-
+    
+    /**
+     * Méthode permettant de déconnecter l'utilisateur (clear du localstorage et redirection vers la page de connexion).
+     */
     function deconnexion() {
         localStorage.setItem("pseudo", null);
         localStorage.setItem("token", null);
                 
         $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
     };
-    
+
     /* Liste des favoris. */
     
     $(document).on("pageshow","#favoriAdmin", function() {
@@ -16,23 +19,23 @@ window.addEventListener('DOMContentLoaded', function() {
     function initFavAdmin() {
         $.get(REST_API_URL + "annee/getFavorites?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
             $('#listviewFavAdmin').empty();
-            
+
             for (var i = 0; i < datas.length; i++) {            
-              $("#listviewFavAdmin").append("<li id=" + datas[i].idAnnee + ">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
+              $("#listviewFavAdmin").append("<li id=idAnneeFav" + datas[i].idAnnee + ">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
             
               $("#" + datas[i].idAnnee).click(function(event) {
-                localStorage.setItem("idDiplome", this.id);
+                localStorage.setItem("idDiplome", this.id.substring(10));
 
                 setTimeout(function() { 
                     $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
                 }, 100);
               });
 
-              $("#" + datas[i].idAnnee).bind("taphold", function (event) {
+              $("#idAnneeFav" + datas[i].idAnnee).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous vraiment ne plus suivre cette année ?");
 
                 if (confirmSuppr == true) {
-                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + this.id + "pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + this.id.substring(10) + "pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
                       alert("Cette année n'est plus suivie.");
                     }
                     .fail(function(jqXHR, textStatus, errorThrown) {
@@ -44,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         } else {
                           alert("Erreur inconnue.");
                         }
-                    }); 
+                    })); 
                 }
               });
             }
@@ -74,14 +77,14 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewEtabAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {            
-              $("#listviewEtabAdmin").append("<li id=" + datas[i].idEtablissement + ">" + datas[i].nom + "<br><p>" + datas[i].ville + "</p></li>");
+              $("#listviewEtabAdmin").append("<li id=idEtab" + datas[i].idEtablissement + ">" + datas[i].nom + "<br><p>" + datas[i].ville + "</p></li>");
 
-              $("#" + datas[i].idEtablissement).bind("taphold", function (event) {
+              $("#idEtab" + datas[i].idEtablissement).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer cet établissement ?");
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'etablissement?id=' + this.id + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'etablissement?id=' + this.id.substring(6) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
@@ -122,26 +125,27 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewDipAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewDipAdmin").append("<li id=" + datas[i].idDiplome + ">" + datas[i].nom + "</li>");
+              $("#listviewDipAdmin").append("<li id=idDip" + datas[i].idDiplome + ">" + datas[i].nom + "</li>");
                 
-              $("#" + datas[i].idDiplome).click(function(event) {
-                localStorage.setItem("idDiplome", this.id);
+              $("#idDip" + datas[i].idDiplome).click(function(event) {
+                localStorage.setItem("idDiplome", this.id.substring(5));
 
                 setTimeout(function() { 
                   $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
                 }, 100);
               });
 
-              $("#" + datas[i].idDiplome).bind("taphold", function (event) {
+              $("#idDip" + datas[i].idDiplome).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer ce diplôme ?");
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'diplome?id=' + this.id + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'diplome?id=' + this.id.substring(5) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
                               alert('Diplôme supprimé.');
+                              location.reload();
                           },
                           401: function() {
                               alert("Session expirée.");
@@ -182,26 +186,27 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewAnnAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewAnnAdmin").append("<li id=" + datas[i].idAnnee + ">" + datas[i].nom + "</li>");
+              $("#listviewAnnAdmin").append("<li id=idAnn" + datas[i].idAnnee + ">" + datas[i].nom + "</li>");
               
-              $("#" + datas[i].idAnnee).click(function(event) {
-                localStorage.setItem("idAnnee", this.id);
+              $("#idAnn" + datas[i].idAnnee).click(function(event) {
+                localStorage.setItem("idAnnee", this.id.substring(5));
 
                 setTimeout(function() { 
                     $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
                 }, 100);
               });
 
-              $("#" + datas[i].idAnnee).bind("taphold", function (event) {
+              $("#idAnn" + datas[i].idAnnee).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer cette année ?");
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'annee?id=' + this.id + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'annee?id=' + this.id.substring(5) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
-                              alert('Année supprimé.');
+                              alert('Année supprimée.');
+                              location.reload();
                           },
                           401: function() {
                               alert("Session expirée.");
@@ -242,23 +247,24 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewUEAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewUEAdmin").append("<li id=" + datas[i].idUE + ">" + datas[i].nom + "</li>");
+              $("#listviewUEAdmin").append("<li id=idUE" + datas[i].idUE + ">" + datas[i].nom + "</li>");
                 
-              $("#" + datas[i].idUE).click(function(event) {
-                localStorage.setItem("idUE", this.id);
+              $("#idUE" + datas[i].idUE).click(function(event) {
+                localStorage.setItem("idUE", this.id.substring(4));
                 $.mobile.changePage("#listeMatAdmin", { transition: "slideup", changeHash: false });
               });
 
-              $("#" + datas[i].idUE).bind("taphold", function (event) {
+              $("#idUE" + datas[i].idUE).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer cette UE ?");
 
                 if (confirmSuppr == true) {
                   $.ajax({
-                     url: REST_API_URL + 'ue?id=' + this.id + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                     url: REST_API_URL + 'ue?id=' + this.id.substring(4) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                      type: 'DELETE',
                      statusCode: {
                         200: function() {
                             alert('UE supprimée.');
+                            location.reload();
                         },
                         401: function() {
                             alert("Session expirée.");
@@ -299,18 +305,19 @@ window.addEventListener('DOMContentLoaded', function() {
             $('#listviewMatAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewMatAdmin").append("<li id=" + datas[i].idMatiere + ">" + datas[i].nom + "</li>");
+              $("#listviewMatAdmin").append("<li id=idMat" + datas[i].idMatiere + ">" + datas[i].nom + "</li>");
 
-              $("#" + datas[i].idMatiere).bind("taphold", function (event) {
+              $("#idMat" + datas[i].idMatiere).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer cette matière ?");
 
                 if (confirmSuppr == true) {
                   $.ajax({
-                     url: REST_API_URL + 'matiere?id=' + this.id + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                     url: REST_API_URL + 'matiere?id=' + this.id.substring(5) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                      type: 'DELETE',
                      statusCode: {
                         200: function() {
                             alert('Matière supprimée.');
+                            location.reload();
                         },
                         401: function() {
                             alert("Session expirée.");
@@ -339,5 +346,5 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         }); 
     };
-    
+
 });

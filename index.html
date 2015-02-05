@@ -99,12 +99,12 @@
            <a id="btnInscriptionValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-            <input id="nom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
-            <input id="prenom" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Prénom" name="prenom" />
-            <input id="email" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Email" name="email" />
-            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
-            <input id="password" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Mot de passe" name="password" />
-            <input id="passwordAgain" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Retapez votre mot de passe" name="passwordAgain" />
+            <input id="nomI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+            <input id="prenomI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Prénom" name="prenom" />
+            <input id="emailI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Email" name="email" />
+            <input id="pseudoI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
+            <input id="passwordI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Mot de passe" name="password" />
+            <input id="passwordAgainI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Retapez votre mot de passe" name="passwordAgain" />
          </div>
       </div>
 
@@ -115,7 +115,7 @@
            <a id="btnPasswordOublieValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-            <input id="pseudo" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
+            <input id="pseudoM" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
          </div>
       </div>
       
@@ -155,7 +155,13 @@
            <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-           <input id="etabAnnee" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Etablissement" name="etabAnnee" />
+           <div data-role="fieldcontain">
+              <label for="selectEtabCreaAnnee" class="select"></label>
+              <select name="selectEtabCreaAnnee" id="selectEtabCreaAnnee">
+
+              </select>
+           </div>
+           
            <input id="nomAnn" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
            <input type="checkbox" name="isLastYear" id="isLastYear" class="custom" />
            <label for="isLastYear">Dernière année du diplôme</label>
@@ -165,8 +171,8 @@
             <option value="trimestre">Trimestre</option>
            </select>
          </div>
-       </div>
-      
+      </div>
+
       <div data-role="page" id="createUEAdmin">
          <div data-role="header" class="headerTabs">
            <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
