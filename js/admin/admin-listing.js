@@ -1,14 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-    
-    /**
-     * Méthode permettant de déconnecter l'utilisateur (clear du localstorage et redirection vers la page de connexion).
-     */
-    function deconnexion() {
-        localStorage.setItem("pseudo", null);
-        localStorage.setItem("token", null);
-                
-        $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
-    };
 
     /* Liste des favoris. */
     
@@ -17,13 +7,17 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     
     function initFavAdmin() {
+        showLoadingCircle();
+
         $.get(REST_API_URL + "annee/getFavorites?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewFavAdmin').empty();
 
             for (var i = 0; i < datas.length; i++) {            
               $("#listviewFavAdmin").append("<li id=idAnneeFav" + datas[i].idAnnee + ">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
             
-              $("#" + datas[i].idAnnee).click(function(event) {
+              $("#idAnneeFav" + datas[i].idAnnee).click(function(event) {
                 localStorage.setItem("idDiplome", this.id.substring(10));
 
                 setTimeout(function() { 
@@ -35,7 +29,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 var confirmSuppr = confirm("Voulez-vous vraiment ne plus suivre cette année ?");
 
                 if (confirmSuppr == true) {
-                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + this.id.substring(10) + "pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + this.id.substring(10) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
                       alert("Cette année n'est plus suivie.");
                     }
                     .fail(function(jqXHR, textStatus, errorThrown) {
@@ -55,6 +49,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewFavAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 401) {
                 alert("Session expirée.");
                 deconnexion();
@@ -73,7 +69,11 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     
     function initEtabAdmin() {
+        showLoadingCircle();
+
         $.get(REST_API_URL + "etablissement/getAll", function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewEtabAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {            
@@ -106,6 +106,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewEtabAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
@@ -121,7 +123,11 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     
     function initDipAdmin() {
+        showLoadingCircle();
+
         $.get(REST_API_URL + "diplome/getAll", function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewDipAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
@@ -167,6 +173,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewDipAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
@@ -178,11 +186,15 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des années. */
 
     $(document).on("pageshow","#listeAnneeAdmin", function(e, data) {
-       initAnnAdmin(localStorage.getItem("idDiplome"));
+       initAnnAdmin();
     });
     
     function initAnnAdmin(idDip) {
-        $.get(REST_API_URL + "annee/getAnneesByDiplome?idDiplome=" + idDip, function(datas) {
+        showLoadingCircle();
+
+        $.get(REST_API_URL + "annee/getAnneesByDiplome?idDiplome=" + localStorage.getItem("idDiplome"), function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewAnnAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
@@ -228,6 +240,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewAnnAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
@@ -239,11 +253,15 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des UE. */
     
     $(document).on("pageshow","#listeUEAdmin", function() {
-       initUEAdmin(localStorage.getItem("idAnnee"));
+       initUEAdmin();
     });
     
-    function initUEAdmin(idAnnee) {
-        $.get(REST_API_URL + "ue/getAllUEOfAnnee?idAnnee=" + idAnnee, function(datas) {
+    function initUEAdmin() {
+        showLoadingCircle();
+
+        $.get(REST_API_URL + "ue/getAllUEOfAnnee?idAnnee=" + localStorage.getItem("idAnnee"), function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewUEAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
@@ -286,6 +304,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewUEAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
@@ -297,39 +317,43 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des matières. */
     
     $(document).on("pageshow","#listeMatAdmin",function() {
-       initMatAdmin(localStorage.getItem("idUE"));
+       initMatAdmin();
     });
     
-    function initMatAdmin(idUE) {
-        $.get(REST_API_URL + "matiere/getAllMatieretOfUE?idUE=" + idUE, function(datas) {
+    function initMatAdmin() {
+        showLoadingCircle();
+
+        $.get(REST_API_URL + "matiere/getAllMatieretOfUE?idUE=" + localStorage.getItem("idUE"), function(datas) {
+            $.mobile.loading('hide');
+
             $('#listviewMatAdmin').empty();
             
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewMatAdmin").append("<li id=idMat" + datas[i].idMatiere + ">" + datas[i].nom + "</li>");
+                $("#listviewMatAdmin").append("<li id=idMat" + datas[i].idMatiere + ">" + datas[i].nom + "</li>");
 
-              $("#idMat" + datas[i].idMatiere).bind("taphold", function (event) {
-                var confirmSuppr = confirm("Voulez-vous supprimer cette matière ?");
+                $("#idMat" + datas[i].idMatiere).bind("taphold", function (event) {
+                    var confirmSuppr = confirm("Voulez-vous supprimer cette matière ?");
 
-                if (confirmSuppr == true) {
-                  $.ajax({
-                     url: REST_API_URL + 'matiere?id=' + this.id.substring(5) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
-                     type: 'DELETE',
-                     statusCode: {
-                        200: function() {
-                            alert('Matière supprimée.');
-                            location.reload();
-                        },
-                        401: function() {
-                            alert("Session expirée.");
-                            deconnexion();
-                        },
-                        500: function() {
-                            alert("Erreur de BDD. Veuillez réessayer.");
-                        }
-                     }
-                  });
-                }
-              });
+                    if (confirmSuppr == true) {
+                        $.ajax({
+                           url: REST_API_URL + 'matiere?id=' + this.id.substring(5) + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                           type: 'DELETE',
+                           statusCode: {
+                              200: function() {
+                                  alert('Matière supprimée.');
+                                  location.reload();
+                              },
+                              401: function() {
+                                  alert("Session expirée.");
+                                  deconnexion();
+                              },
+                              500: function() {
+                                  alert("Erreur de BDD. Veuillez réessayer.");
+                              }
+                           }
+                        });
+                    }
+                });
             }
 
             if (datas.length == 0) {
@@ -339,6 +363,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewMatAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {

@@ -1,11 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-
-    function deconnexion() {
-        localStorage.setItem("pseudo", null);
-        localStorage.setItem("token", null);
-                
-        $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
-    };
     
     /* Accueil. */
     
@@ -34,13 +27,19 @@ window.addEventListener('DOMContentLoaded', function() {
         if ((pseudo.length == 0) || (password.length == 0)) {
             alert("Pseudo et / ou mot de passe vide.")
         } else {    
+            showLoadingCircle();
+
             $.post(REST_API_URL + "admin/login", {username: pseudo, password: $.sha256(password)}, function(data) {
+               $.mobile.loading('hide');
+
                localStorage.setItem("token", data);
                localStorage.setItem("pseudo", pseudo);
                 
                $.mobile.changePage("#favoriAdmin", { transition: "slideup", changeHash: false });
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
+               $.mobile.loading('hide');
+
                if (jqXHR.status == 401) { 
                   alert("Identifiants incorrects. Veuillez réessayer.");
                } else if (jqXHR.status == 403) {
