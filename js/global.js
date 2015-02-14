@@ -2,15 +2,19 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Accueil. */
     
-    $("#adminChoice").click(function(event){
-        if (localStorage.getItem("pseudo") != null) {
-           $.mobile.changePage("#favoriAdmin", { transition: "slideup", changeHash: false });
+    $("#adminChoice").click(function(event) {
+        localStorage.setItem("accueilChoice", "administrateur");
+
+        if ((localStorage.getItem("pseudo") != null) && (localStorage.getItem("token") != null)) {
+           $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
         } else {
            $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
         }
     });
     
-    $("#etudiantChoice").click(function(event){
+    $("#etudiantChoice").click(function(event) {
+        localStorage.setItem("accueilChoice", "etudiant");
+
         $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
     });
 });
@@ -30,8 +34,8 @@ function deconnexion() {
  * Méthode permettant de montrer un rond de chargement.
  */
 function showLoadingCircle() {
-   $.mobile.loading('show', {
-       text: 'Chargement',
-       textVisible: true
-   });
+    $.mobile.loading('show', {
+        text: 'Chargement',
+        textVisible: true
+    });
 };

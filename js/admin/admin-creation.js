@@ -1,5 +1,13 @@
 window.addEventListener('DOMContentLoaded', function() {
 
+    $("#btnCreaAccueil").click(function(event) {
+        if ($("#titleAccueilAdmin").text() == "Etablissements") {
+           $.mobile.changePage("#createEtabAdmin", { transition: "slideup", changeHash: false });
+        } else if ($("#titleAccueilAdmin").text() == "Diplômes") {
+           $.mobile.changePage("#createDiplomeAdmin", { transition: "slideup", changeHash: false });
+        } 
+    });
+
     /* Création d'un établissement. */
 
     $("#btnCreateEtabAdmin").click(function(event) {
@@ -16,7 +24,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 200: function() {
                   $.mobile.loading('hide');
                   alert('Etablissement créé.');
-                  $.mobile.changePage("#etabAdmin", { transition: "slideup", changeHash: false });
+                  $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
                 },
                 401: function() {
                   $.mobile.loading('hide');

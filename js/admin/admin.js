@@ -1,23 +1,9 @@
 window.addEventListener('DOMContentLoaded', function() {
     
-    /* Accueil. */
-    
-    $("#favoriAdmin").on("swipeleft", function() {
-        $.mobile.changePage("#etabAdmin", { changeHash: false });
+    $("#btnBackAccueil").click(function(event) {  
+      $.mobile.changePage("#accueil", { transition: "slideup", changeHash: false });
     });
-    
-    $("#etabAdmin").on("swipeleft", function() {
-        $.mobile.changePage("#diplomesAdmin", { changeHash: false });
-    });
-    
-    $("#etabAdmin").on("swiperight", function() {
-        $.mobile.changePage("#favoriAdmin", { changeHash: false });
-    });
-    
-    $("#diplomesAdmin").on("swiperight", function() {
-        $.mobile.changePage("#etabAdmin", { changeHash: false });
-    });
-    
+
     /* Connexion. */
     
     $("#btnConnexion").click(function(event) {  
@@ -35,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function() {
                localStorage.setItem("token", data);
                localStorage.setItem("pseudo", pseudo);
                 
-               $.mobile.changePage("#favoriAdmin", { transition: "slideup", changeHash: false });
+               $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                $.mobile.loading('hide');
@@ -109,5 +95,100 @@ window.addEventListener('DOMContentLoaded', function() {
           alert("Le pseudo entré est vide.")
         }
     });
+
+    /* Clôturer le compte. */
+
+    $("#cloturerCompte").click(function(event) {
+        var confirmSuppr = confirm("Voulez-vous vraiment clôturer votre compte ?");
+
+        if (confirmSuppr == true) {
+            $.get(REST_API_URL + "admin/closeAdminAccount?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+              $.mobile.loading('hide');
+
+              alert("Votre compte a bien été clôturé.");
+              deconnexion
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                $.mobile.loading('hide');
+
+                if (jqXHR.status == 401) {
+                    alert("Session expirée.");
+                    deconnexion();
+                } else if (jqXHR.status == 500) {
+                    alert("Erreur de BDD. Veuillez réessayer.");
+                } else {
+                    alert("Erreur inconnue.");
+                }
+            }); 
+        }  
+    });
+
+    /* Nommer un administrateur. */
+
+    $(document).on("pageshow","#nommerAdmin",function() {
+       initAdminsWaiting();
+    });
+    
+    function initAdminsWaiting() {
+        showLoadingCircle();
+
+        $.get(REST_API_URL + "admin/getAllAdminInactive", function(datas) {
+            $.mobile.loading('hide');
+
+            $('#listviewAdminsWaiting').empty();
+
+            var listeAdmins = [];
+
+            for (var i = 0; i < datas.length; i++) {   
+              listeAdmins.push(datas[i]);
+
+              $("#listviewAdminsWaiting").append("<li id=\"listeAdmins-" + datas[i].id + "\">" + datas[i].pseudo + "</li>");
+            
+              $("#listeAdmins-" + datas[i].id).click(function(event) {
+                var pseudoToNominate = listeAdmins[$(this).index()].pseudo;
+                var confirmSuppr = confirm("Voulez-vous vraiment nommer \"" + pseudoToNominate + "\" administrateur ?");
+
+                if (confirmSuppr == true) {
+                    $.get(REST_API_URL + "admin/nominateAdmin?pseudoToNominate=" + pseudoToNominate + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                      $.mobile.loading('hide');
+
+                      alert(pseudoToNominate + " a été nommé administrateur.");
+                      location.reload();
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        $.mobile.loading('hide');
+
+                        if (jqXHR.status == 401) {
+                            alert("Session expirée.");
+                            deconnexion();
+                        } else if (jqXHR.status == 500) {
+                            alert("Erreur de BDD. Veuillez réessayer.");
+                        } else {
+                            alert("Erreur inconnue.");
+                        }
+                    }); 
+                }  
+              });
+            }
+
+            if (datas.length == 0) {
+              $("#listviewAdminsWaiting").append("<li>Aucun compte en attente.</li>");
+            } 
+
+            $("#listviewAdminsWaiting").listview("refresh");
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
+            if (jqXHR.status == 401) {
+                alert("Session expirée.");
+                deconnexion();
+            } else if (jqXHR.status == 500) {
+                alert("Erreur de BDD. Veuillez réessayer.");
+            } else {
+                alert("Erreur inconnue.");
+            }
+        }); 
+    }; 
     
 });
