@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function() {
               $.mobile.loading('hide');
 
               alert("Votre compte a bien été clôturé.");
-              deconnexion
+              deconnexion();
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 $.mobile.loading('hide');
