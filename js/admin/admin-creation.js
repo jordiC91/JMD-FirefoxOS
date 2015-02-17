@@ -1,9 +1,9 @@
 window.addEventListener('DOMContentLoaded', function() {
 
     $("#btnCreaAccueil").click(function(event) {
-        if ($("#titleAccueilAdmin").text() == "Etablissements") {
+        if ($("#titleAccueilAdmin").text() == "Etablissement") {
            $.mobile.changePage("#createEtabAdmin", { transition: "slideup", changeHash: false });
-        } else if ($("#titleAccueilAdmin").text() == "Diplômes") {
+        } else if ($("#titleAccueilAdmin").text() == "Diplôme") {
            $.mobile.changePage("#createDiplomeAdmin", { transition: "slideup", changeHash: false });
         } 
     });
@@ -61,7 +61,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 200: function() {
                   $.mobile.loading('hide');
                   alert('Diplôme créé.');
-                  $.mobile.changePage("#diplomesAdmin", { transition: "slideup", changeHash: false });
+                  $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
                 },
                 401: function() {
                   $.mobile.loading('hide');
@@ -118,17 +118,21 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
+                    $.mobile.loading('hide');
                     alert('Année créée.');
                     $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
                 },
                 401: function() {
+                    $.mobile.loading('hide');
                     alert("Session expirée.");
                     deconnexion();
                 },
                 403: function() {
+                    $.mobile.loading('hide');
                     alert("Une année avec ce nom et cet établissement existe déjà.");
                 },
                 500: function() {
+                    $.mobile.loading('hide');
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }

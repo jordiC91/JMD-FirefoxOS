@@ -1,8 +1,16 @@
 window.addEventListener('DOMContentLoaded', function() {
-    
+
     $("#btnBackAccueil").click(function(event) {  
       $.mobile.changePage("#accueil", { transition: "slideup", changeHash: false });
     });
+
+    /* Redirection de l'utilisateur vers l'écran qu'il a défini, s'il existe. */
+
+    if (localStorage.getItem("accueilChoice") == "etudiant") {
+      $("#etudiantChoice").click();
+    } else if (localStorage.getItem("accueilChoice") == "administrateur") {
+      $("#adminChoice").click();
+    }
 
     /* Connexion. */
     
@@ -190,5 +198,53 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         }); 
     }; 
+
+    /* Notifications par mail. */
+
+    $("#radioNotifMail").change(function() {
+      showLoadingCircle();
+
+      if ($("#radioNotifMail").is(":checked")) { // Coché
+        $.ajax({
+             url: REST_API_URL + "admin/acceptMail?newValue=true&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+             type: 'PUT',
+             statusCode: {
+                200: function() {
+                    $.mobile.loading('hide');
+                    alert('Vous recevrez les prochains mails envoyés par l\'application.');
+                },
+                401: function() {
+                    $.mobile.loading('hide');
+                    alert("Session expirée.");
+                    deconnexion();
+                },
+                500: function() {
+                    $.mobile.loading('hide');
+                    alert("Erreur de BDD. Veuillez réessayer.");
+                }
+             }
+        });
+      } else {
+        $.ajax({
+             url: REST_API_URL + "admin/acceptMail?newValue=false&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+             type: 'PUT',
+             statusCode: {
+                200: function() {
+                    $.mobile.loading('hide');
+                    alert('Vous ne recevrez plus les prochains mails envoyés par l\'application.');
+                },
+                401: function() {
+                    $.mobile.loading('hide');
+                    alert("Session expirée.");
+                    deconnexion();
+                },
+                500: function() {
+                    $.mobile.loading('hide');
+                    alert("Erreur de BDD. Veuillez réessayer.");
+                }
+             }
+        });
+      }
+    });
     
 });

@@ -18,6 +18,7 @@
 
 .btnBackground {
   background-color: rgba(0, 0, 0, 0) !important;
+  border: none;
 }
 
 .h3Connexion {
@@ -31,7 +32,18 @@
 }
 
 .custom-navbar ul li a.ui-btn-active {
-    background: rgb(255,94,58) !important; 
+    background: white !important; 
+    font-weight: normal;
+    color: rgb(255,94,58) !important;
+    border: none;
+    text-shadow: none !important;
+}
+
+.custom-navbar ul li a {
+    background: white !important; 
+    color: rgb(146,146,146) !important;
+    border: none;
+    font-weight: normal;
 }
 
 .importantLink {
@@ -39,42 +51,52 @@
 }
 
 .ui-icon-favori-sel:after {
-  background-image: url("../img/star.png");
-  background-size: 20px 20px;
-}
-
-.ui-icon-favori:after {
   background-image: url("../img/star_or.png");
   background-size: 20px 20px;
 }
 
-.ui-icon-etablissement:after {
-  background-image: url("../img/university_or.png");
+.ui-icon-favori:after {
+  background-image: url("../img/star.png");
   background-size: 20px 20px;
 }
 
-.ui-icon-etablissement-sel:after {
+.ui-icon-etablissement:after {
   background-image: url("../img/university.png");
   background-size: 20px 20px;
 }
 
-.ui-icon-diplome:after {
-  background-image: url("../img/diploma_or.png");
+.ui-icon-etablissement-sel:after {
+  background-image: url("../img/university_or.png");
   background-size: 20px 20px;
 }
 
-.ui-icon-diplome-sel:after {
+.ui-icon-diplome:after {
   background-image: url("../img/diploma.png");
   background-size: 20px 20px;
 }
 
+.ui-icon-diplome-sel:after {
+  background-image: url("../img/diploma_or.png");
+  background-size: 20px 20px;
+}
+
+.ui-icon-annee:after {
+  background-image: url("../img/student.png");
+  background-size: 20px 20px;
+}
+
+.ui-icon-annee-sel:after {
+  background-image: url("../img/student_or.png");
+  background-size: 20px 20px;
+}
+
 .ui-icon-more:after {
-  background-image: url("../img/more_or.png");
+  background-image: url("../img/more.png");
   background-size: 20px 20px;
 }
 
 .ui-icon-more-sel:after {
-  background-image: url("../img/more.png");
+  background-image: url("../img/more_or.png");
   background-size: 20px 20px;
 }
 

@@ -7,11 +7,14 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Autre. */
 
     function listenerAutreTab() {
+        showLoadingCircle();
+
         $("#tabAutre").addClass("ui-icon-more-sel").removeClass("ui-icon-more");
 
         $("#tabDip").addClass("ui-icon-diplome").removeClass("ui-icon-diplome-sel");
         $("#tabFavoris").addClass("ui-icon-favori").removeClass("ui-icon-favori-sel");
         $("#tabEtab").addClass("ui-icon-etablissement").removeClass("ui-icon-etablissement-sel");
+        $("#tabAnnee").addClass("ui-icon-annee").removeClass("ui-icon-annee-sel");
 
         $('#listviewEtabAdmin').empty();
         $('#listviewDipAdmin').empty();
@@ -22,6 +25,28 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#titleAccueilAdmin").text("Autre");
 
         $("#btnCreaAccueil").hide();
+
+        $.get(REST_API_URL + "admin/isMailAccepted?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+            $.mobile.loading('hide');
+
+            if (datas == "true") {
+              $("#radioNotifMail").addClass('checked');
+            } else {
+              $("#radioNotifMail").removeClass('checked');
+            }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            $.mobile.loading('hide');
+
+            if (jqXHR.status == 401) {
+                alert("Session expirée.");
+                deconnexion();
+            } else if (jqXHR.status == 500) {
+                alert("Erreur de BDD. Veuillez réessayer.");
+            } else {
+                alert("Erreur inconnue.");
+            }
+         }); 
     };
 
     $("#tabAutre").bind("click", listenerAutreTab);
@@ -29,13 +54,14 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des favoris. */
 
     function initFavAdmin() {
+        showLoadingCircle();
+
         $("#tabFavoris").addClass("ui-icon-favori-sel").removeClass("ui-icon-favori");
         
         $("#tabDip").addClass("ui-icon-diplome").removeClass("ui-icon-diplome-sel");
         $("#tabEtab").addClass("ui-icon-etablissement").removeClass("ui-icon-etablissement-sel");
         $("#tabAutre").addClass("ui-icon-more").removeClass("ui-icon-more-sel");
-
-        showLoadingCircle();
+        $("#tabAnnee").addClass("ui-icon-annee").removeClass("ui-icon-annee-sel");
 
         $('#listviewEtabAdmin').empty();
         $('#listviewDipAdmin').empty();
@@ -105,20 +131,21 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des établissements. */
     
     function initEtabAdmin() {
+        showLoadingCircle();
+
         $("#tabEtab").addClass("ui-icon-etablissement-sel").removeClass("ui-icon-etablissement");
 
         $("#tabFavoris").addClass("ui-icon-favori").removeClass("ui-icon-favori-sel");
         $("#tabDip").addClass("ui-icon-diplome").removeClass("ui-icon-diplome-sel");
         $("#tabAutre").addClass("ui-icon-more").removeClass("ui-icon-more-sel");
-
-        showLoadingCircle();
+        $("#tabAnnee").addClass("ui-icon-annee").removeClass("ui-icon-annee-sel");
 
         $('#listviewFavAdmin').empty();
         $('#listviewDipAdmin').empty();
 
         $('#autresLinks').hide();
 
-        $("#titleAccueilAdmin").text("Etablissements");
+        $("#titleAccueilAdmin").text("Etablissement");
 
         $("#btnCreaAccueil").show();
 
@@ -177,20 +204,21 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Liste des diplômes. */
     
     function initDipAdmin() {
+        showLoadingCircle();
+
         $("#tabDip").addClass("ui-icon-diplome-sel").removeClass("ui-icon-diplome");
 
         $("#tabFavoris").addClass("ui-icon-favori").removeClass("ui-icon-favori-sel");
         $("#tabEtab").addClass("ui-icon-etablissement").removeClass("ui-icon-etablissement-sel");
         $("#tabAutre").addClass("ui-icon-more").removeClass("ui-icon-more-sel");
-
-        showLoadingCircle();
+        $("#tabAnnee").addClass("ui-icon-annee").removeClass("ui-icon-annee-sel");
 
         $('#listviewEtabAdmin').empty();
         $('#listviewFavAdmin').empty();
         
         $('#autresLinks').hide();
 
-        $("#titleAccueilAdmin").text("Diplômes");
+        $("#titleAccueilAdmin").text("Diplôme");
 
         $("#btnCreaAccueil").show();
 
@@ -254,6 +282,29 @@ window.addEventListener('DOMContentLoaded', function() {
     };
 
     $("#tabDip").bind("click", initDipAdmin);
+
+    /* Chercher une année. */
+
+    function initChercherAnnAdmin() {
+        $("#tabAnnee").addClass("ui-icon-annee-sel").removeClass("ui-icon-annee");
+
+        $("#tabFavoris").addClass("ui-icon-favori").removeClass("ui-icon-favori-sel");
+        $("#tabEtab").addClass("ui-icon-etablissement").removeClass("ui-icon-etablissement-sel");
+        $("#tabAutre").addClass("ui-icon-more").removeClass("ui-icon-more-sel");
+        $("#tabDip").addClass("ui-icon-diplome").removeClass("ui-icon-diplome-sel");
+
+        $('#listviewEtabAdmin').empty();
+        $('#listviewFavAdmin').empty();
+        $('#listviewDipAdmin').empty();
+
+        $('#autresLinks').hide();
+
+        $("#titleAccueilAdmin").text("Année");
+
+        $("#btnCreaAccueil").show();
+    };
+
+    $("#tabAnnee").bind("click", initChercherAnnAdmin);
     
     /* Liste des années. */
 
@@ -264,7 +315,7 @@ window.addEventListener('DOMContentLoaded', function() {
     function initAnnAdmin() {
         showLoadingCircle();
 
-        $("#titleAccueilAdmin").text(JSON.parse(sessionStorage.getItem("diplome")).nom);
+        $("#titreListeAnnees").text(JSON.parse(sessionStorage.getItem("diplome")).nom);
 
         $.get(REST_API_URL + "annee/getAnneesByDiplome?idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome, function(datas) {
             $.mobile.loading('hide');
