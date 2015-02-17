@@ -8,6 +8,11 @@
         <meta name="description" content="J'ai Mon Diplôme" />
         <meta name="viewport" content="width=device-width" />
             
+        <!-- Tag for iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-title" content="JMD WebApp">
+
         <link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.min.css" />
         <link rel="stylesheet" href="css/app.css" />
     </head>
@@ -272,20 +277,140 @@
            </ul>
          </div>
        </div>
-      
-      <!-- Etudiant -->
-      
-      <div data-role="page" id="accueilEtudiant">
-         <div data-role="header" class="headerTabs">
-           <a href="#accueil" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">&lt;</a>
-           <h1 class="headerTextTabs">Accueil</h1>
-           <a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">+</a>
-         </div>
-         <div data-role="main" class="ui-content">
-           
-         </div>
-       </div>
 
+<!-- Etudiant -->
+
+<div data-role="page" id="accueilEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+    <!--<a href="#accueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon ui-title"><p>Retour</p></a> -->
+    <a id="backButtonAccueilEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+     <h1 class="headerTextTabs">Etudiant</h1>
+    <a id="addAnneeEtudiantButton" class="plusButton ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-icon-notext ui-nodisc-icon"></a>
+ </div>
+ <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <ul id="listRCCEtudiant" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
+
+  </ul>
+</div>
+</div>
+
+<!-- Liste années étudiant -->
+
+<div data-role="page" id="addAnneeEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+  <a id="backButtonAddAnneeEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+  <h1 class="headerTextTabs">Ajout d'une année</h1>
+</div>
+<div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <ul id="listAddAnneesEtudiant" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="false">
+    <li data-role="list-divider">Filtrer par :</li>
+    <li><a id="etabChoiceEtudiant">Etablissement</a></li>
+    <li><a id="diplChoiceEtudiant">Diplôme</a></li>
+  </ul>
+</div>
+</div>
+
+<!-- Choix Etablissement -->
+
+<div data-role="page" id="choixEtablissementEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+      <a id="backButtonChoixEtablissementEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+   <h1 class="headerTextTabs">Etablissements</h1>
+ </div>
+ <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <ul data-role="listview" data-inset="false" id="listviewEtabEtudiant" data-icon="false">
+
+  </ul>
+</div>
+</div>
+
+<!-- Choix Diplôme -->
+
+<div data-role="page" id="choixDiplomeEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+   <a id="backButtonChoixDiplomeEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+   <h1 class="headerTextTabs">Diplômes</h1>
+ </div>
+ <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <ul data-role="listview" data-inset="false" id="listviewDiplEtudiant" data-icon="false">
+
+  </ul>
+</div>
+</div>
+
+<!-- Liste UEs -->
+
+<div data-role="page" id="listUEEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+  <a id="backButtonListUEEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+   <h1 class="headerTextTabs">Etudiant</h1>
+ </div>
+ <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <ul id="listUEMatiereEtudiant" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
+
+  </ul>
+</div>
+</div>
+
+<!-- Edite note matière -->
+
+<div data-role="page" id="editeNoteMatiereEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+  <a id="backButtonEditeNoteMatiereEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+   <h1 class="headerTextTabs">Etudiant</h1>
+      <a id="saveModifMatiere" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+ </div>
+ <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <ul id="editeNoteChampsList" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
+    <li class="ui-field-contain">
+        <label for="noteps">Partiel : </label>
+        <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Partiel" name="partiel" data-clear-btn="true"/>
+     </li>
+      <li class="ui-field-contain">
+      <label for="noteps">Coefficient : </label>
+      <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="partiel" data-clear-btn="true"/>
+     </li>
+    <li class="ui-field-contain">
+      <label for="noteps">Rattrapage : </label>
+      <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
+     </li>
+    <li data-role="list-divider">Contrôle continu</li>
+    <li class="ui-body ui-body-b">
+      <button id="buttonAddNoteCC" type="submit" class="ui-btn ui-corner-all ui-btn-a ui-icon-plus ui-btn-icon-left">Ajouter une note</button>
+    </li>
+  </ul>
+</div>
+</div>
+
+<!-- AjoutNoteCC -->
+
+<div data-role="page" id="addNoteCCEtudiant">
+ <div data-role="header" class="headerTabs" data-position="fixed">
+  <a id="backButtonAddNoteCCEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+   <h1 class="headerTextTabs">Ajout d'une note</h1>
+      <a id="saveNoteCC" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+ </div>
+ <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <ul id="editeNoteChampsList" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
+    <li class="ui-field-contain">
+        <label for="nameNoteCC">Nom de la note : </label>
+        <input id="nameNoteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Partiel" name="partiel" data-clear-btn="true"/>
+     </li>
+      <li class="ui-field-contain">
+      <label for="noteCC">Note : </label>
+      <input id="noteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="partiel" data-clear-btn="true"/>
+     </li>
+    <li class="ui-field-contain">
+      <label for="noteSurCC">Noté sur : </label>
+      <input id="noteSurCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
+     </li>
+    <li class="ui-field-contain">
+      <label for="coeffCC">Coefficient : </label>
+      <input id="coeffCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
+     </li>
+  </ul>
+</div>
+</div>
         <script src="js/jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/sha256.js"></script>
@@ -295,5 +420,5 @@
         <script src="js/admin/admin-creation.js"></script>
         <script src="js/admin/admin-listing.js"></script>
         <script src="js/etudiant.js"></script>
-    </body>
+</body>
 </html>

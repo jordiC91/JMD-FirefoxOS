@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-
     /* Accueil. */
     
     $("#adminChoice").click(function(event) {
@@ -34,8 +33,15 @@ function deconnexion() {
  * Méthode permettant de montrer un rond de chargement.
  */
 function showLoadingCircle() {
-    $.mobile.loading('show', {
-        text: 'Chargement',
-        textVisible: true
-    });
+    $.mobile.loading( "show", {
+            text: "Chargement...",
+            textVisible: true,
+            theme: "a",
+            textonly: false,
+            html: ""
+    });
 };
+
+function hideLoadingCircle() {
+    $.mobile.loading('hide');
+}
