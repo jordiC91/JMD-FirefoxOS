@@ -4,14 +4,6 @@ window.addEventListener('DOMContentLoaded', function() {
       $.mobile.changePage("#accueil", { transition: "slideup", changeHash: false });
     });
 
-    /* Redirection de l'utilisateur vers l'écran qu'il a défini, s'il existe. */
-
-    if (localStorage.getItem("accueilChoice") == "etudiant") {
-      $("#etudiantChoice").click();
-    } else if (localStorage.getItem("accueilChoice") == "administrateur") {
-      $("#adminChoice").click();
-    }
-
     /* Connexion. */
     
     $("#btnConnexion").click(function(event) {  

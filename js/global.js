@@ -1,8 +1,19 @@
 window.addEventListener('DOMContentLoaded', function() {
+
+    /* Redirection de l'utilisateur vers l'écran qu'il a défini, s'il existe. */
+
+    if (localStorage.getItem("accueilChoice") == "etudiant") {
+      $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
+    } else if (localStorage.getItem("accueilChoice") == "administrateur") {
+      $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+    }
+
     /* Accueil. */
     
     $("#adminChoice").click(function(event) {
-        localStorage.setItem("accueilChoice", "administrateur");
+        if ($("#rememberChoice").is(":checked")) {
+          localStorage.setItem("accueilChoice", "administrateur");
+        }
 
         if ((localStorage.getItem("pseudo") != null) && (localStorage.getItem("token") != null)) {
            $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
@@ -12,7 +23,9 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     
     $("#etudiantChoice").click(function(event) {
-        localStorage.setItem("accueilChoice", "etudiant");
+        if ($("#rememberChoice").is(":checked")) {
+          localStorage.setItem("accueilChoice", "etudiant");
+        }
 
         $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
     });
