@@ -42,7 +42,7 @@
 
       <div data-role="page" id="accueilAdmin">
             <div data-role="header" class="headerTabs">
-              <a id="btnBackAccueil" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+              <a id="btnBackAccueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Déconnexion</a>
               <h1 class="headerTextTabs" id="titleAccueilAdmin">Accueil</h1>
               <a id="btnCreaAccueil" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
             </div>
@@ -63,13 +63,15 @@
                   </ul>
                 </div>
                 <div id="tab4">
-                  
+                  <ul id="listviewChercherAnnee" data-role="listview">
+                    
+                  </ul>
                 </div>
                 <div id="tab5">
                   <ul data-role="listview" id="autresLinks">
                     <li></li>
                     <li><a href="#nommerAdmin">Nommer un administrateur</a></li>
-                    <li style="padding: 0;">
+                    <li style="padding: 0">
                       <input name="radioNotifMail" data-iconpos="right" id="radioNotifMail" checked="checked" type="checkbox">
                       <label for="radioNotifMail">Notifications par mail</label>
                     </li>
@@ -92,10 +94,38 @@
               </div>
             </div>
       </div>
+
+      <!-- Choix Etablissement -->
+
+      <div data-role="page" id="choixEtabAdmin">
+       <div data-role="header" class="headerTabs" data-position="fixed">
+         <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+         <h1 class="headerTextTabs">Etablissements</h1>
+       </div>
+       <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+        <ul data-role="listview" data-inset="false" id="listviewDiplAdminA" data-icon="false">
+
+        </ul>
+      </div>
+      </div>
+
+      <!-- Choix Diplôme -->
+
+      <div data-role="page" id="choixDiplomeAdmin">
+       <div data-role="header" class="headerTabs" data-position="fixed">
+         <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+         <h1 class="headerTextTabs">Diplômes</h1>
+       </div>
+       <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+        <ul data-role="listview" data-inset="false" id="listviewDiplAdmin" data-icon="false">
+
+        </ul>
+      </div>
+      </div>
       
       <div data-role="page" id="connexion">
          <div data-role="header" class="headerTabs">
-           <a href="#accueil" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#accueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Accueil</a>
            <h1 class="headerTextTabs">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
@@ -107,16 +137,16 @@
             <a id="btnConnexion" class="ui-btn ui-nodisc-icon boutonJMD">Se connecter</a>
             <br>
 
-            <div id="links">
+            <p id="links">
               <a href="#inscription" id="inscription" class="connexionLink">Inscription</a>
-              <a id="mdpOublie" href="#mdpOublie" class="connexionLink" style="padding-left: 5px; border-left: 1px solid #000000">Mot de passe oublié ?</a>
-            </div>
+              <a id="mdpOublie" href="#mdpOublie" class="connexionLink">Mot de passe oublié ?</a>
+            </p>
          </div>
       </div>
 
       <div data-role="page" id="inscription">
          <div data-role="header" class="headerTabs">
-           <a href="#connexion" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#connexion" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Inscription</h1>
            <a id="btnInscriptionValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -132,7 +162,7 @@
 
       <div data-role="page" id="mdpOublie">
          <div data-role="header" class="headerTabs">
-           <a href="#connexion" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#connexion" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
            <h1 class="headerTextTabs">Mot de passe oublié ?</h1>
            <a id="btnPasswordOublieValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -157,7 +187,7 @@
       
       <div data-role="page" id="createEtabAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#accueilAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Nouvel établissement</h1>
            <a id="btnCreateEtabAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -171,7 +201,7 @@
       
       <div data-role="page" id="createDiplomeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#accueilAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Nouveau diplôme</h1>
            <a id="btnCreateDipAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -184,7 +214,7 @@
       
       <div data-role="page" id="createAnneeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#listeAnneeAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Nouvelle année</h1>
            <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -209,7 +239,7 @@
 
       <div data-role="page" id="createUEAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#listeUEAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Nouvelle UE</h1>
            <a id="btnCreateUEAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -222,7 +252,7 @@
       
       <div data-role="page" id="createMatiereAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeMatAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#listeMatAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
            <h1 class="headerTextTabs">Nouvelle matière</h1>
            <a id="btnCreateMatAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -241,7 +271,7 @@
       
       <div data-role="page" id="listeAnneeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#accueilAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
            <h1 id="titreListeAnnees" class="headerTextTabs">Années</h1>
            <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -254,7 +284,7 @@
       
       <div data-role="page" id="listeUEAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#listeAnneeAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
            <h1 class="headerTextTabs">UE</h1>
            <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -267,7 +297,7 @@
       
       <div data-role="page" id="listeMatAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+           <a href="#listeUEAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
            <h1 class="headerTextTabs">Matières</h1>
            <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>

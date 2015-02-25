@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
 
     $("#btnBackAccueil").click(function(event) {  
-      $.mobile.changePage("#accueil", { transition: "slideup", changeHash: false });
+      deconnexion();
     });
 
     /* Connexion. */

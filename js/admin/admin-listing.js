@@ -1,9 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
 
-    $(document).on("pageshow","#accueilAdmin", function(e, data) {
-       $("#tabFavoris").click();
-    });
-
     /* Autre. */
 
     function listenerAutreTab() {
@@ -19,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $('#listviewEtabAdmin').empty();
         $('#listviewDipAdmin').empty();
         $('#listviewFavAdmin').empty();
+        $('#listviewChercherAnnee').empty();
 
         $('#autresLinks').show();
 
@@ -65,6 +62,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $('#listviewEtabAdmin').empty();
         $('#listviewDipAdmin').empty();
+        $('#listviewChercherAnnee').empty();
 
         $('#autresLinks').hide();
 
@@ -76,6 +74,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $.mobile.loading('hide');
 
             $('#listviewFavAdmin').empty();
+
+            $("#listviewFavAdmin").append("<li data-role=\"list-divider\">VOS FAVORIS</li>");
 
             var listeAnnee = [];
 
@@ -110,6 +110,10 @@ window.addEventListener('DOMContentLoaded', function() {
               });
             }
 
+            if (datas.length == 0) {
+              $("#listviewFavAdmin").append("<li>Aucunee année suivie.</li>");
+            } 
+
             $("#listviewFavAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -142,6 +146,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $('#listviewFavAdmin').empty();
         $('#listviewDipAdmin').empty();
+        $('#listviewChercherAnnee').empty();
 
         $('#autresLinks').hide();
 
@@ -153,6 +158,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $.mobile.loading('hide');
 
             $('#listviewEtabAdmin').empty();
+
+            $("#listviewEtabAdmin").append("<li data-role=\"list-divider\">LISTE DES ETABLISSEMENTS</li>");
 
             var listeEtab = [];
             
@@ -186,6 +193,10 @@ window.addEventListener('DOMContentLoaded', function() {
               });
             }
 
+            if (datas.length == 0) {
+              $("#listviewEtabAdmin").append("<li>Aucun établissement.</li>");
+            } 
+
             $("#listviewEtabAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -215,7 +226,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $('#listviewEtabAdmin').empty();
         $('#listviewFavAdmin').empty();
-        
+        $('#listviewChercherAnnee').empty();
+
         $('#autresLinks').hide();
 
         $("#titleAccueilAdmin").text("Diplôme");
@@ -226,6 +238,8 @@ window.addEventListener('DOMContentLoaded', function() {
             $.mobile.loading('hide');
 
             $('#listviewDipAdmin').empty();
+
+            $("#listviewDipAdmin").append("<li data-role=\"list-divider\">LISTE DES DIPLÔMES</li>");
             
             var listeDiplomes = [];
 
@@ -265,7 +279,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             if (datas.length == 0) {
-              $("#listviewDipAdmin").append("<li>Aucune année</li>");
+              $("#listviewDipAdmin").append("<li>Aucune année.</li>");
             } 
 
             $("#listviewDipAdmin").listview("refresh");
@@ -285,6 +299,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Chercher une année. */
 
+    $("#tabAnnee").bind("click", initChercherAnnAdmin);
+
     function initChercherAnnAdmin() {
         $("#tabAnnee").addClass("ui-icon-annee-sel").removeClass("ui-icon-annee");
 
@@ -297,6 +313,21 @@ window.addEventListener('DOMContentLoaded', function() {
         $('#listviewFavAdmin').empty();
         $('#listviewDipAdmin').empty();
 
+        $("#listviewChercherAnnee").empty();
+        $("#listviewChercherAnnee").append("<li data-role=\"list-divider\">FILTRER PAR :</li>");
+        $("#listviewChercherAnnee").append("<li id=\"choiceEtabAdminLi\">Etablissement</li>");
+        $("#listviewChercherAnnee").append("<li id=\"choiceDipAdminLi\">Diplôme</li>");
+
+        $("#choiceEtabAdminLi").bind("click", function() {
+          $.mobile.changePage("#choixEtabAdmin", { transition: "slideup", changeHash: false });
+        });
+
+        $("#choiceDipAdminLi").bind("click", function() {
+          $.mobile.changePage("#choixDiplomeAdmin", { transition: "slideup", changeHash: false });
+        });
+
+        $("#listviewChercherAnnee").listview("refresh");
+
         $('#autresLinks').hide();
 
         $("#titleAccueilAdmin").text("Année");
@@ -304,7 +335,114 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#btnCreaAccueil").show();
     };
 
+    $(document).on("pageshow","#accueilAdmin", function() {
+      if (sessionStorage.getItem("isChoiceDipADone")) {
+        $("#choiceDipAdminLi").append("<p id=\"choiceDiplAEtudiant\">"+JSON.parse(sessionStorage.getItem("tempDipA")).nom+"</p>");
+      }
+
+      if (sessionStorage.getItem("isChoiceEtabADone")) {
+        $("#choiceEtabAdminLi").append("<p id=\"choiceEtabAEtudiant\">"+JSON.parse(sessionStorage.getItem("tempEtabA")).nom+"</p>");
+      }
+
+      if (sessionStorage.getItem("isChoiceDipADone") && sessionStorage.getItem("isChoiceEtabADone")){
+        showLoadingCircle();
+
+        $.get(REST_API_URL + "annee/getAnnees?idDiplome="+(JSON.parse(sessionStorage.getItem("tempDipA"))).idDiplome+"&idEtablissement="+(JSON.parse(sessionStorage.getItem("tempEtabA"))).idEtablissement, function(datas) {
+          $("#listviewChercherAnnee li:nth-child(3)").nextAll("li").remove();
+
+          if (datas.length > 0) {
+            $("#listviewChercherAnnee").append("<li data-role=\"list-divider\">Liste des années :</li>");
+
+            for (var i = 0; i < datas.length; i++) {
+              $("#listviewChercherAnnee").append("<li ntab=\""+i+"\"><a>" + datas[i].nom + "</a></li>");
+            }
+
+            $("#listviewChercherAnnee").listview("refresh");
+
+            $("#listviewChercherAnnee li a").bind( "click", function() {
+
+            });
+          }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+          console.log(errorThrown);
+        }); 
+
+        hideLoadingCircle();
+     }
+    });
+
     $("#tabAnnee").bind("click", initChercherAnnAdmin);
+
+    /* Choix Diplôme */
+
+    $(document).on("pageshow","#choixDiplomeAdmin", function() {
+      showLoadingCircle();
+      initChoixDiplomeAdmin();
+      hideLoadingCircle();
+    });
+
+    function initChoixDiplomeAdmin() {
+      $.get(REST_API_URL + "diplome/getAll", function(datas) {
+        $('#listviewDiplAdmin').empty();
+
+        for (var i = 0; i < datas.length; i++) {            
+          $("#listviewDiplAdmin").append("<li ntab=\""+i+"\"><a>" + datas[i].nom + "<br></a></li>");
+        }
+
+        $("#listviewDiplAdmin").listview("refresh");
+
+        $("#listviewDiplAdmin li a").bind( "click", function() {
+          $("#listviewDiplAdmin li a").removeClass();
+          $("#listviewDiplAdmin li a").addClass("ui-btn ui-btn-icon-right");
+
+          $(this).addClass("ui-btn ui-btn-icon-right ui-icon-check");
+
+          var i = $(this).parent().attr('ntab');
+          sessionStorage.setItem("tempDipA", JSON.stringify(datas[i]));
+          sessionStorage.setItem("isChoiceDipADone",true);
+        });
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(errorThrown);
+      }); 
+    };
+
+    /* Choix établissement */
+
+    $(document).on("pageshow","#choixEtabAdmin", function() {
+      showLoadingCircle();
+      initChoixEtabAdmin();
+      hideLoadingCircle();
+    });
+
+    function initChoixEtabAdmin() {
+      $.get(REST_API_URL + "etablissement/getAll", function(datas) {
+        $('#listviewDiplAdminA').empty();
+
+        for (var i = 0; i < datas.length; i++) {            
+          $("#listviewDiplAdminA").append("<li ntab=\""+i+"\"><a>" + datas[i].nom + "<br></a></li>");
+        }
+
+        $("#listviewDiplAdminA").listview("refresh");
+
+        $("#listviewDiplAdminA li a").bind( "click", function() {
+          $("#listviewDiplAdminA li a").removeClass();
+          $("#listviewDiplAdminA li a").addClass("ui-btn ui-btn-icon-right");
+
+          $(this).addClass("ui-btn ui-btn-icon-right ui-icon-check");
+
+          var i = $(this).parent().attr('ntab');
+          sessionStorage.setItem("tempEtabA", JSON.stringify(datas[i]));
+          sessionStorage.setItem("isChoiceEtabADone",true);
+        });
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(errorThrown);
+      }); 
+    };
     
     /* Liste des années. */
 
@@ -360,7 +498,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             if (datas.length == 0) {
-              $("#listviewAnnAdmin").append("<li>Aucune année</li>");
+              $("#listviewAnnAdmin").append("<li>Aucune année.</li>");
             } 
 
             $("#listviewAnnAdmin").listview("refresh");
@@ -430,7 +568,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             if (datas.length == 0) {
-              $("#listviewUEAdmin").append("<li>Aucune UE</li>");
+              $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
             } 
 
             $("#listviewUEAdmin").listview("refresh");
@@ -495,7 +633,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             if (datas.length == 0) {
-              $("#listviewMatAdmin").append("<li>Aucune matière</li>");
+              $("#listviewMatAdmin").append("<li>Aucune matière.</li>");
             } 
 
             $("#listviewMatAdmin").listview("refresh");

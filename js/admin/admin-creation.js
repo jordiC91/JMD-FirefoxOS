@@ -5,6 +5,8 @@ window.addEventListener('DOMContentLoaded', function() {
            $.mobile.changePage("#createEtabAdmin", { transition: "slideup", changeHash: false });
         } else if ($("#titleAccueilAdmin").text() == "Diplôme") {
            $.mobile.changePage("#createDiplomeAdmin", { transition: "slideup", changeHash: false });
+        } else if ($("#titleAccueilAdmin").text() == "Année") {
+           $.mobile.changePage("#createAnneeAdmin", { transition: "slideup", changeHash: false });
         } 
     });
 
