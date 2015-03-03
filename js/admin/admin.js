@@ -4,6 +4,20 @@ window.addEventListener('DOMContentLoaded', function() {
       deconnexion();
     });
 
+    $(document).on("pageshow","#accueilAdmin", function() {
+      if ((sessionStorage.getItem("currentTab") == null) || (sessionStorage.getItem("currentTab") == "favoris")) {
+        $("#tabFavoris").trigger("click");
+      } else if (sessionStorage.getItem("currentTab") == "établissement") {
+        $("#tabEtab").trigger("click");
+      } else if (sessionStorage.getItem("currentTab") == "diplôme") {
+        $("#tabDip").trigger("click");
+      } else if (sessionStorage.getItem("currentTab") == "année") {
+        $("#tabAnnee").trigger("click");
+      } else if (sessionStorage.getItem("currentTab") == "autre") {
+        $("#tabAutre").trigger("click");
+      }
+    });
+
     /* Connexion. */
     
     $("#btnConnexion").click(function(event) {  

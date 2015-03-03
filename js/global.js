@@ -5,7 +5,12 @@ window.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem("accueilChoice") == "etudiant") {
       $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
     } else if (localStorage.getItem("accueilChoice") == "administrateur") {
-      $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+
+      if ((localStorage.getItem("pseudo") != "null") && (localStorage.getItem("token") != "null")) {
+           $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+      } else {
+           $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+      }
     }
 
     /* Accueil. */
@@ -15,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem("accueilChoice", "administrateur");
         }
 
-        if ((localStorage.getItem("pseudo") != null) && (localStorage.getItem("token") != null)) {
+        if ((localStorage.getItem("pseudo") != "null") && (localStorage.getItem("token") != "null")) {
            $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
         } else {
            $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
