@@ -43,8 +43,17 @@ window.addEventListener('DOMContentLoaded', function() {
 function deconnexion() {
    localStorage.setItem("pseudo", null);
    localStorage.setItem("token", null);
+
+   sessionStorage.setItem("currentTab", null);
                
    $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+};
+
+/**
+ * Méthode permettant de changer de page
+ */
+function changePage(page) {
+   $.mobile.changePage("#" + page, { transition: "slideup", changeHash: false });
 };
 
 /**

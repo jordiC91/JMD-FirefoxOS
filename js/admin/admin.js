@@ -30,15 +30,15 @@ window.addEventListener('DOMContentLoaded', function() {
             showLoadingCircle();
 
             $.post(REST_API_URL + "admin/login", {username: pseudo, password: $.sha256(password)}, function(data) {
-               $.mobile.loading('hide');
+               hideLoadingCircle();
 
                localStorage.setItem("token", data);
                localStorage.setItem("pseudo", pseudo);
                 
-               $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+               changePage("accueilAdmin");
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
-               $.mobile.loading('hide');
+               hideLoadingCircle();
 
                if (jqXHR.status == 401) { 
                   alert("Identifiants incorrects. Veuillez réessayer.");
@@ -48,6 +48,7 @@ window.addEventListener('DOMContentLoaded', function() {
                   alert("Erreur de BDD. Veuillez réessayer.");
                } else {
                   alert("Erreur inconnue.");
+                  console.log(jqXHR);
                }
             });
         }
@@ -65,17 +66,23 @@ window.addEventListener('DOMContentLoaded', function() {
 
         if ((nom.length > 0) && (prenom.length > 0) && (email.length > 0) && (pseudo.length > 0) && (password.length > 0) && (passwordAgain.length > 0)) {
           if (password == passwordAgain) {
+            showLoadingCircle();
+
             $.get(REST_API_URL + "admin/subscription?nom=" + nom + "&prenom=" + prenom + "&email=" + email + "&pseudo=" + pseudo + "&password=" + password, function(datas) {
-                alert('Succès de l\'inscription.\nCompte en attente de validation');
-                $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+                hideLoadingCircle();
+                alert('Succès de l\'inscription.\nVotre compte est maintenant en attente de validation');
+                changePage("connexion");
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
+              hideLoadingCircle();
+
               if (jqXHR.status == 403) {
                 alert("Un utilisateur avec ces informations existe déjà.");
               } else if (jqXHR.status == 500) {
                 alert("Erreur de BDD. Veuillez réessayer.");
               } else {
                 alert("Erreur inconnue.");
+                console.log(jqXHR);
               }
             });
           } else {
@@ -92,17 +99,23 @@ window.addEventListener('DOMContentLoaded', function() {
         var pseudo = $("#pseudoM").val();
 
         if (pseudo.length > 0) {
+          showLoadingCircle();
+
           $.get(REST_API_URL + "admin/passwordOublie?pseudo=" + pseudo, function(datas) {
+              hideLoadingCircle();
               alert('Instructions envoyées par mail.');
-              $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+              changePage("connexion");
           })
           .fail(function(jqXHR, textStatus, errorThrown) {
+              hideLoadingCircle();
+
               if (jqXHR.status == 404) { 
                   alert("Utilisateur inconnu.");
               } else if (jqXHR.status == 500) {
                   alert("Erreur de BDD. Veuillez réessayer.");
               } else {
                   alert("Erreur inconnue.");
+                  console.log(jqXHR);
               }
           }); 
         } else {
@@ -116,14 +129,15 @@ window.addEventListener('DOMContentLoaded', function() {
         var confirmSuppr = confirm("Voulez-vous vraiment clôturer votre compte ?");
 
         if (confirmSuppr == true) {
-            $.get(REST_API_URL + "admin/closeAdminAccount?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
-              $.mobile.loading('hide');
+            showLoadingCircle();
 
+            $.get(REST_API_URL + "admin/closeAdminAccount?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+              hideLoadingCircle();
               alert("Votre compte a bien été clôturé.");
               deconnexion();
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
-                $.mobile.loading('hide');
+                hideLoadingCircle();
 
                 if (jqXHR.status == 401) {
                     alert("Session expirée.");
@@ -132,6 +146,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     alert("Erreur de BDD. Veuillez réessayer.");
                 } else {
                     alert("Erreur inconnue.");
+                    console.log(jqXHR);
                 }
             }); 
         }  
@@ -147,7 +162,7 @@ window.addEventListener('DOMContentLoaded', function() {
         showLoadingCircle();
 
         $.get(REST_API_URL + "admin/getAllAdminInactive", function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewAdminsWaiting').empty();
 
@@ -164,13 +179,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (confirmSuppr == true) {
                     $.get(REST_API_URL + "admin/nominateAdmin?pseudoToNominate=" + pseudoToNominate + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
-                      $.mobile.loading('hide');
-
+                      hideLoadingCircle();
                       alert(pseudoToNominate + " a été nommé administrateur.");
                       location.reload();
                     })
                     .fail(function(jqXHR, textStatus, errorThrown) {
-                        $.mobile.loading('hide');
+                        hideLoadingCircle();
 
                         if (jqXHR.status == 401) {
                             alert("Session expirée.");
@@ -179,6 +193,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             alert("Erreur de BDD. Veuillez réessayer.");
                         } else {
                             alert("Erreur inconnue.");
+                            console.log(jqXHR);
                         }
                     }); 
                 }  
@@ -192,7 +207,7 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewAdminsWaiting").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 401) {
                 alert("Session expirée.");
@@ -201,6 +216,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 alert("Erreur de BDD. Veuillez réessayer.");
             } else {
                 alert("Erreur inconnue.");
+                console.log(jqXHR);
             }
         }); 
     }; 
@@ -216,16 +232,16 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert('Vous recevrez les prochains mails envoyés par l\'application.');
                 },
                 401: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Session expirée.");
                     deconnexion();
                 },
                 500: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
@@ -236,16 +252,16 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert('Vous ne recevrez plus les prochains mails envoyés par l\'application.');
                 },
                 401: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Session expirée.");
                     deconnexion();
                 },
                 500: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }

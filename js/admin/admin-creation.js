@@ -1,13 +1,17 @@
 window.addEventListener('DOMContentLoaded', function() {
 
     $("#btnCreaAccueil").click(function(event) {
+        var newPage;
+
         if ($("#titleAccueilAdmin").text() == "Etablissement") {
-           $.mobile.changePage("#createEtabAdmin", { transition: "slideup", changeHash: false });
+           newPage = "createEtabAdmin";
         } else if ($("#titleAccueilAdmin").text() == "Diplôme") {
-           $.mobile.changePage("#createDiplomeAdmin", { transition: "slideup", changeHash: false });
+           newPage = "createDiplomeAdmin";
         } else if ($("#titleAccueilAdmin").text() == "Année") {
-           $.mobile.changePage("#createAnneeAdmin", { transition: "slideup", changeHash: false });
+           newPage = "createAnneeAdmin";
         } 
+
+        changePage(newPage);
     });
 
     /* Création d'un établissement. */
@@ -24,21 +28,21 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert('Etablissement créé.');
-                  $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+                  changePage("accueilAdmin");
                 },
                 401: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Session expirée.");
                   deconnexion();
                 },
                 403: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Un établissement avec ce nom existe déjà.");
                 },
                 500: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
@@ -61,21 +65,21 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert('Diplôme créé.');
-                  $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+                  changePage("accueilAdmin");
                 },
                 401: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Session expirée.");
                   deconnexion();
                 },
                 403: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Un diplôme avec ce nom existe déjà.");
                 },
                 500: function() {
-                  $.mobile.loading('hide');
+                  hideLoadingCircle();
                   alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
@@ -88,7 +92,11 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Création d'une année. */
 
     $(document).on("pageshow","#createAnneeAdmin",function() {
+       showLoadingCircle();
+
        $.get(REST_API_URL + "etablissement/getAll", function(datas) {
+            hideLoadingCircle();
+
             $('#selectEtabCreaAnnee').empty();
 
             for (var i = 0; i < datas.length; i++) {            
@@ -98,10 +106,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#selectEtabCreaAnnee").selectmenu("refresh", true);
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
+            hideLoadingCircle();
+
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     });
@@ -116,25 +127,25 @@ window.addEventListener('DOMContentLoaded', function() {
           showLoadingCircle();
 
           $.ajax({
-             url: REST_API_URL + 'annee?nom=' + nom + "&idDiplome=" + localStorage.getItem("idDiplome") + "&idEtablissement=" + idEtablissement + "&decoupage=" + decoupage + "&isLastYear=" + isLastYear + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+             url: REST_API_URL + 'annee?nom=' + nom + "&idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome + "&idEtablissement=" + idEtablissement + "&decoupage=" + decoupage + "&isLastYear=" + isLastYear + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
              type: 'PUT',
              statusCode: {
                 200: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert('Année créée.');
-                    $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
+                    changePage("listeAnneeAdmin");
                 },
                 401: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Session expirée.");
                     deconnexion();
                 },
                 403: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Une année avec ce nom et cet établissement existe déjà.");
                 },
                 500: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
@@ -161,17 +172,17 @@ window.addEventListener('DOMContentLoaded', function() {
              type: 'PUT',
              statusCode: {
                 200: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert('UE créée.');
-                    $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
+                    changePage("listeUEAdmin");
                 },
                 401: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Session expirée.");
                     deconnexion();
                 },
                 500: function() {
-                    $.mobile.loading('hide');
+                    hideLoadingCircle();
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
@@ -201,17 +212,17 @@ window.addEventListener('DOMContentLoaded', function() {
                type: 'PUT',
                statusCode: {
                   200: function() {
-                      $.mobile.loading('hide');
+                      hideLoadingCircle();
                       alert('Matière créée.');
-                      $.mobile.changePage("#listeMatAdmin", { transition: "slideup", changeHash: false });
+                      changePage("listeMatAdmin");
                   },
                   401: function() {
-                      $.mobile.loading('hide');
+                      hideLoadingCircle();
                       alert("Session expirée.");
                       deconnexion();
                   },
                   500: function() {
-                      $.mobile.loading('hide');
+                      hideLoadingCircle();
                       alert("Erreur de BDD. Veuillez réessayer.");
                   }
                }

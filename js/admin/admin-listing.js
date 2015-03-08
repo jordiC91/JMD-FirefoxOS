@@ -5,6 +5,8 @@ window.addEventListener('DOMContentLoaded', function() {
     function listenerAutreTab() {
         showLoadingCircle();
 
+        sessionStorage.setItem("currentTab", "autre");
+
         $("#tabAutre").addClass("ui-icon-more-sel").removeClass("ui-icon-more");
 
         $("#tabDip").addClass("ui-icon-diplome").removeClass("ui-icon-diplome-sel");
@@ -24,7 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#btnCreaAccueil").hide();
 
         $.get(REST_API_URL + "admin/isMailAccepted?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (datas == "true") {
               $("#radioNotifMail").addClass('checked');
@@ -33,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 401) {
                 alert("Session expirée.");
@@ -42,6 +44,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 alert("Erreur de BDD. Veuillez réessayer.");
             } else {
                 alert("Erreur inconnue.");
+                console.log(jqXHR);
             }
          }); 
     };
@@ -52,6 +55,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function initFavAdmin() {
         showLoadingCircle();
+
+        sessionStorage.setItem("currentTab", "favoris");
 
         $("#tabFavoris").addClass("ui-icon-favori-sel").removeClass("ui-icon-favori");
         
@@ -71,7 +76,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#btnCreaAccueil").hide();
 
         $.get(REST_API_URL + "annee/getFavorites?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewFavAdmin').empty();
 
@@ -85,7 +90,7 @@ window.addEventListener('DOMContentLoaded', function() {
               $("#listviewFavAdmin").append("<li id=\"listeFav-" + datas[i].idAnnee + "\">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
             
               $("#listeFav-" + datas[i].idAnnee).click(function(event) {
-                sessionStorage.setItem("annee", JSON.stringify(listeAnnee[$(this).index()])); 
+                sessionStorage.setItem("annee", JSON.stringify(listeAnnee[$(this).index() - 1])); 
                 $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
               });
 
@@ -93,7 +98,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 var confirmSuppr = confirm("Voulez-vous vraiment ne plus suivre cette année ?");
 
                 if (confirmSuppr == true) {
-                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnee[$(this).index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnee[$(this).index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
                       alert("Cette année n'est plus suivie.");
                     }
                     .fail(function(jqXHR, textStatus, errorThrown) {
@@ -104,6 +109,7 @@ window.addEventListener('DOMContentLoaded', function() {
                           alert("Erreur de BDD. Veuillez réessayer.");
                         } else {
                           alert("Erreur inconnue.");
+                          console.log(jqXHR);
                         }
                     })); 
                 }
@@ -117,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewFavAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 401) {
                 alert("Session expirée.");
@@ -126,6 +132,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 alert("Erreur de BDD. Veuillez réessayer.");
             } else {
                 alert("Erreur inconnue.");
+                console.log(jqXHR);
             }
          }); 
     };
@@ -136,6 +143,8 @@ window.addEventListener('DOMContentLoaded', function() {
     
     function initEtabAdmin() {
         showLoadingCircle();
+
+        sessionStorage.setItem("currentTab", "établissement");
 
         $("#tabEtab").addClass("ui-icon-etablissement-sel").removeClass("ui-icon-etablissement");
 
@@ -155,7 +164,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#btnCreaAccueil").show();
 
         $.get(REST_API_URL + "etablissement/getAll", function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewEtabAdmin').empty();
 
@@ -173,7 +182,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'etablissement?id=' + listeEtab[$(this).index()].idEtablissement + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'etablissement?id=' + listeEtab[$(this).index() - 1].idEtablissement + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
@@ -200,12 +209,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewEtabAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     };
@@ -216,6 +226,8 @@ window.addEventListener('DOMContentLoaded', function() {
     
     function initDipAdmin() {
         showLoadingCircle();
+
+        sessionStorage.setItem("currentTab", "diplôme");
 
         $("#tabDip").addClass("ui-icon-diplome-sel").removeClass("ui-icon-diplome");
 
@@ -235,7 +247,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#btnCreaAccueil").show();
 
         $.get(REST_API_URL + "diplome/getAll", function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewDipAdmin').empty();
 
@@ -249,7 +261,7 @@ window.addEventListener('DOMContentLoaded', function() {
               $("#listviewDipAdmin").append("<li id=\"listeDip-" + datas[i].idDiplome + "\">" + datas[i].nom + "</li>");
               
               $("#listeDip-" + datas[i].idDiplome).click(function(event) {
-                sessionStorage.setItem("diplome", JSON.stringify(listeDiplomes[$(this).index()])); 
+                sessionStorage.setItem("diplome", JSON.stringify(listeDiplomes[$(this).index()  - 1])); 
                 $.mobile.changePage("#listeAnneeAdmin", { transition: "slideup", changeHash: false });
               });
 
@@ -258,7 +270,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'diplome?id=' + listeDiplomes[$(this).index()].idDiplome + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'diplome?id=' + listeDiplomes[$(this).index() - 1].idDiplome + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
@@ -285,12 +297,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewDipAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     };
@@ -302,6 +315,8 @@ window.addEventListener('DOMContentLoaded', function() {
     $("#tabAnnee").bind("click", initChercherAnnAdmin);
 
     function initChercherAnnAdmin() {
+        sessionStorage.setItem("currentTab", "année");
+
         $("#tabAnnee").addClass("ui-icon-annee-sel").removeClass("ui-icon-annee");
 
         $("#tabFavoris").addClass("ui-icon-favori").removeClass("ui-icon-favori-sel");
@@ -353,15 +368,26 @@ window.addEventListener('DOMContentLoaded', function() {
           if (datas.length > 0) {
             $("#listviewChercherAnnee").append("<li data-role=\"list-divider\">Liste des années :</li>");
 
+            var listeAnnees = []; 
+
             for (var i = 0; i < datas.length; i++) {
-              $("#listviewChercherAnnee").append("<li ntab=\""+i+"\"><a>" + datas[i].nom + "</a></li>");
+              listeAnnees.push(datas[i]);
+              $("#listviewChercherAnnee").append("<li id=\"listviewChercherAnnee-"+datas[i].idAnnee+"\"><a>" + datas[i].nom + "</a></li>");
+
+              $("#listviewChercherAnnee-" + datas[i].idAnnee).click(function(event) {
+                sessionStorage.setItem("diplome", sessionStorage.getItem("tempDipA")); 
+                sessionStorage.setItem("annee", JSON.stringify(listeAnnees[$(this).index() - 4])); 
+
+                sessionStorage.removeItem("isChoiceEtabADone");
+                sessionStorage.removeItem("isChoiceDipADone");
+                sessionStorage.removeItem("tempDipA");
+                sessionStorage.removeItem("tempEtabA");
+
+                $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
+              });
             }
 
             $("#listviewChercherAnnee").listview("refresh");
-
-            $("#listviewChercherAnnee li a").bind( "click", function() {
-
-            });
           }
         }).fail(function(jqXHR, textStatus, errorThrown) {
           console.log(textStatus);
@@ -433,8 +459,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
           $(this).addClass("ui-btn ui-btn-icon-right ui-icon-check");
 
-          var i = $(this).parent().attr('ntab');
-          sessionStorage.setItem("tempEtabA", JSON.stringify(datas[i]));
+          sessionStorage.setItem("tempEtabA", JSON.stringify(datas[$(this).parent().attr('ntab')]));
           sessionStorage.setItem("isChoiceEtabADone",true);
         });
       })
@@ -456,7 +481,7 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#titreListeAnnees").text(JSON.parse(sessionStorage.getItem("diplome")).nom);
 
         $.get(REST_API_URL + "annee/getAnneesByDiplome?idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome, function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewAnnAdmin').empty();
 
@@ -469,7 +494,7 @@ window.addEventListener('DOMContentLoaded', function() {
               
               $("#listeAnn-" + datas[i].idAnnee).click(function(event) {
                 sessionStorage.setItem("annee", JSON.stringify(listeAnnees[$(this).index()])); 
-                $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
+                changePage("listeUEAdmin");
               });
 
               $("#listeAnn-" + datas[i].idAnnee).bind("taphold", function (event) {
@@ -504,12 +529,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewAnnAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     };
@@ -523,10 +549,10 @@ window.addEventListener('DOMContentLoaded', function() {
     function initUEAdmin() {
         showLoadingCircle();
 
-        $("#titleAccueilAdmin").text(JSON.parse(sessionStorage.getItem("annee")).nom);
+        $("#titreUEAdminPage").text(JSON.parse(sessionStorage.getItem("annee")).nom);
 
         $.get(REST_API_URL + "ue/getAllUEOfAnnee?idAnnee=" + JSON.parse(sessionStorage.getItem("annee")).idAnnee, function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewUEAdmin').empty();
 
@@ -539,7 +565,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 
               $("#listeUE-" + datas[i].idUE).click(function(event) {
                 sessionStorage.setItem("ue", JSON.stringify(listeUE[$(this).index()])); 
-                $.mobile.changePage("#listeMatAdmin", { transition: "slideup", changeHash: false });
+                changePage("listeMatAdmin");
               });
 
               $("#listeUE-" + datas[i].idUE).bind("taphold", function (event) {
@@ -574,12 +600,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewUEAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     };
@@ -593,10 +620,10 @@ window.addEventListener('DOMContentLoaded', function() {
     function initMatAdmin() {
         showLoadingCircle();
 
-        $("#titleAccueilAdmin").text(JSON.parse(sessionStorage.getItem("ue")).nom);
+        $("#titreMatiereAdminPage").text(JSON.parse(sessionStorage.getItem("ue")).nom);
 
         $.get(REST_API_URL + "matiere/getAllMatieretOfUE?idUE=" + JSON.parse(sessionStorage.getItem("ue")).idUE, function(datas) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             $('#listviewMatAdmin').empty();
 
@@ -605,7 +632,7 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var i = 0; i < datas.length; i++) {
                 listeMatieres.push(datas[i]);
 
-                $("#listviewMatAdmin").append("<li id=\"listeMat" + datas[i].idMatiere + "\">" + datas[i].nom + "</li>");
+                $("#listviewMatAdmin").append("<li id=\"listeMat-" + datas[i].idMatiere + "\">" + datas[i].nom + "</li>");
 
                 $("#listeMat-" + datas[i].idMatiere).bind("taphold", function (event) {
                     var confirmSuppr = confirm("Voulez-vous supprimer cette matière ?");
@@ -639,12 +666,13 @@ window.addEventListener('DOMContentLoaded', function() {
             $("#listviewMatAdmin").listview("refresh");
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-            $.mobile.loading('hide');
+            hideLoadingCircle();
 
             if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
+              console.log(jqXHR);
             }
         }); 
     };

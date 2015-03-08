@@ -42,7 +42,7 @@
 
       <div data-role="page" id="accueilAdmin">
             <div data-role="header" class="headerTabs">
-              <a id="btnBackAccueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Déconnexion</a>
+              <a id="btnBackAccueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Logout</a>
               <h1 class="headerTextTabs" id="titleAccueilAdmin">Accueil</h1>
               <a id="btnCreaAccueil" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
             </div>
@@ -163,7 +163,7 @@
       <div data-role="page" id="mdpOublie">
          <div data-role="header" class="headerTabs">
            <a href="#connexion" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-           <h1 class="headerTextTabs">Mot de passe oublié ?</h1>
+           <h1 class="headerTextTabs">Password oublié ?</h1>
            <a id="btnPasswordOublieValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
@@ -219,7 +219,7 @@
            <a id="btnCreateAnnAdmin" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
-           <div data-role="fieldcontain">
+           <div data-role="fieldcontain" style="width: 100%">
               <label for="selectEtabCreaAnnee" class="select"></label>
               <select name="selectEtabCreaAnnee" id="selectEtabCreaAnnee">
 
@@ -285,7 +285,7 @@
       <div data-role="page" id="listeUEAdmin">
          <div data-role="header" class="headerTabs">
            <a href="#listeAnneeAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-           <h1 class="headerTextTabs">UE</h1>
+           <h1 class="headerTextTabs" id="titreUEAdminPage">UE</h1>
            <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
@@ -298,7 +298,7 @@
       <div data-role="page" id="listeMatAdmin">
          <div data-role="header" class="headerTabs">
            <a href="#listeUEAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-           <h1 class="headerTextTabs">Matières</h1>
+           <h1 class="headerTextTabs" id="titreMatiereAdminPage">Matières</h1>
            <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
