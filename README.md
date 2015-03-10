@@ -1,4 +1,4 @@
-# JMD-WS
+# JMD-FirefoxOS
 
 This Github project is a module containing the FirefoxOS application of JMD.
 
