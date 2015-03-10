@@ -11,23 +11,9 @@ window.addEventListener('DOMContentLoaded', function() {
 			$("#etabChoiceEtudiant").parent().append("<p id=\"choiceEtabEtudiant\">"+JSON.parse(sessionStorage.getItem("tempEtab")).nom+"</p>");
 		}
 
-		// Go to Choix Etablissement
-		$("#etabChoiceEtudiant").click(function() {
-			$("#choiceEtabEtudiant").remove();
-			sessionStorage.setItem("isChoiceEtabActiv",true);
-			$.mobile.changePage("#choixEtablissementEtudiant", { transition: "slide", changeHash: false });
-		});
-
 		if (sessionStorage.getItem("isChoiceDiplDone")) {
 			$("#diplChoiceEtudiant").parent().append("<p id=\"choiceDiplEtudiant\">"+JSON.parse(sessionStorage.getItem("tempDipl")).nom+"</p>");
 		}
-
-		// Go to Choix Diplome
-		$("#diplChoiceEtudiant").click(function() {
-			$("#choiceDiplEtudiant").remove();
-			sessionStorage.setItem("isChoiceDiplActiv",true);
-			$.mobile.changePage("#choixDiplomeEtudiant", { transition: "slide", changeHash: false });
-		});
 
 		if (sessionStorage.getItem("isChoiceDiplDone") && sessionStorage.getItem("isChoiceEtabDone")){
 			showLoadingCircle();
@@ -45,39 +31,53 @@ window.addEventListener('DOMContentLoaded', function() {
 
 					$("#listAddAnneesEtudiant li a").bind( "click", function() {
 						var i = $(this).parent().attr('ntab');
-
-						if (confirm("Cliquer sur OK pour télécharger le RCC \""+datas[i].nom+"\" du diplôme \""+JSON.parse(sessionStorage.getItem("tempDipl")).nom+"\" de l'établissement \""+JSON.parse(sessionStorage.getItem("tempEtab")).nom+"\"") == true) {
-							showLoadingCircle();
-							$.get(REST_API_URL + "annee/getCompleteYear?idAnnee="+datas[i].idAnnee, function(datasCompleteYear) {
-								console.log(datasCompleteYear);
-								addAnnee(datasCompleteYear);
-								$.mobile.changePage("#accueilEtudiant", { transition: "slideup", reverse: true });
-							}).fail(function(jqXHR, textStatus, errorThrown) {
-								console.log(textStatus);
-								console.log(errorThrown);
-							}); 
-							hideLoadingCircle();
+						if(datas[i] != null){
+							if (confirm("Cliquer sur OK pour télécharger le RCC \""+datas[i].nom+"\" du diplôme \""+JSON.parse(sessionStorage.getItem("tempDipl")).nom+"\" de l'établissement \""+JSON.parse(sessionStorage.getItem("tempEtab")).nom+"\"") == true) {
+								showLoadingCircle();
+								$.get(REST_API_URL + "annee/getCompleteYear?idAnnee="+datas[i].idAnnee, function(datasCompleteYear) {
+									addAnnee(datasCompleteYear);
+									$.mobile.changePage("#accueilEtudiant", { transition: "slideup", reverse: true });
+									hideLoadingCircle();
+								}).fail(function(jqXHR, textStatus, errorThrown) {
+									console.log(textStatus);
+									console.log(errorThrown);
+									hideLoadingCircle();
+								}); 
+							}
 						}
 					});
 				}
+				hideLoadingCircle();
 			}).fail(function(jqXHR, textStatus, errorThrown) {
 				console.log(textStatus);
 				console.log(errorThrown);
+				hideLoadingCircle();
 			}); 
-			hideLoadingCircle();
 		}
 	});
+
+// Go to Choix Diplome
+$("#diplChoiceEtudiant").click(function() {
+	$("#choiceDiplEtudiant").remove();
+	sessionStorage.setItem("isChoiceDiplActiv",true);
+	$.mobile.changePage("#choixDiplomeEtudiant", { transition: "slide", changeHash: false });
+});
+
+// Go to Choix Etablissement
+$("#etabChoiceEtudiant").click(function() {
+	$("#choiceEtabEtudiant").remove();
+	sessionStorage.setItem("isChoiceEtabActiv",true);
+	$.mobile.changePage("#choixEtablissementEtudiant", { transition: "slide", changeHash: false });
+});
 
 $("#backButtonAddAnneeEtudiant").click(function(event) {
 	$.mobile.changePage("#accueilEtudiant", { transition: "slideup", reverse: true });
 });
 
-
 /* Choix établissement */
 $(document).on("pageshow","#choixEtablissementEtudiant", function() {
 	showLoadingCircle();
 	initChoixEtablissementEtudiant();
-	hideLoadingCircle();
 });
 
 $("#backButtonChoixEtablissementEtudiant").click(function(event) {
@@ -105,11 +105,11 @@ function initChoixEtablissementEtudiant() {
 			sessionStorage.setItem("tempEtab", JSON.stringify(datas[i]));
 			sessionStorage.setItem("isChoiceEtabDone",true);
 		});
-
-	})
-	.fail(function(jqXHR, textStatus, errorThrown) {
+		hideLoadingCircle();
+	}).fail(function(jqXHR, textStatus, errorThrown) {
 		console.log(textStatus);
 		console.log(errorThrown);
+			hideLoadingCircle();
 	}); 
 }
 
@@ -117,7 +117,6 @@ function initChoixEtablissementEtudiant() {
 $(document).on("pageshow","#choixDiplomeEtudiant", function() {
 	showLoadingCircle();
 	initChoixDiplomeEtudiant();
-	hideLoadingCircle();
 });
 
 $("#backButtonChoixDiplomeEtudiant").click(function(event) {
@@ -126,7 +125,7 @@ $("#backButtonChoixDiplomeEtudiant").click(function(event) {
 
 function initChoixDiplomeEtudiant() {
 	$.get(REST_API_URL + "diplome/getAll", function(datas) {
-		$('#listviewEtabEtudiant').empty();
+		$('#listviewDiplEtudiant').empty();
 
 		for (var i = 0; i < datas.length; i++) {            
 			$("#listviewDiplEtudiant").append("<li ntab=\""+i+"\"><a>" + datas[i].nom + "<br></a></li>");
@@ -144,11 +143,11 @@ function initChoixDiplomeEtudiant() {
 			sessionStorage.setItem("tempDipl", JSON.stringify(datas[i]));
 			sessionStorage.setItem("isChoiceDiplDone",true);
 		});
-
-	})
-	.fail(function(jqXHR, textStatus, errorThrown) {
+		hideLoadingCircle();
+	}).fail(function(jqXHR, textStatus, errorThrown) {
 		console.log(textStatus);
 		console.log(errorThrown);
+		hideLoadingCircle();
 	}); 
 };
 
@@ -174,9 +173,6 @@ function getRccEtudiant(){
 		listRCCEtudiantDOM.append("<li data-role=\"list-divider\">" + rccEtudiant[i].nomDiplome + "</li>");
 
 		for (var j = 0;j < rccEtudiant[i].annees.length; j++){
-			//listRCCEtudiantDOM.append("<li section=\""+i+"\" row=\""+j+"\"><a>" + rccEtudiant[i].annees[j].nom + "<br></a></li>");
-			console.log("getRccEtudiant");
-			console.log(rccEtudiant[i].annees[j]);
 			if (rccEtudiant[i].annees[j].moyenne == -1){
 				listRCCEtudiantDOM.append("<li section=\""+i+"\" row=\""+j+"\"><a>" + rccEtudiant[i].annees[j].nom + "<br></a><div class=\"noteEtudiant\"><div><p class=\"withoutNote\">Aucune note</p></div></div></li>");
 			}
@@ -208,7 +204,6 @@ function getRccEtudiant(){
 		}
 	});
 
-
 	listRCCEtudiantDOM.listview("refresh");
 };
 
@@ -226,11 +221,6 @@ $(document).on("pagebeforeshow","#listUEEtudiant", function() {
 		showPageUE("SEM1");
 
 		$("#sem2").click(function(event) {
-
-
-
-
-			
 			showPageUE("SEM2");
 		});
 
@@ -266,7 +256,6 @@ function showPageUE(decoupage){
 	listUEMatiereEtudiantDOM.fadeOut("fast", function(){
 
 		listUEMatiereEtudiantDOM.empty();
-		console.log(decoupage);
 		if (decoupage == "NULL"){
 			var ues = currentAnneeEtudiant.ues;
 		}
@@ -277,12 +266,9 @@ function showPageUE(decoupage){
 		for (var i = 0; i < ues.length; i++) {         
 			var ue = new UE(ues[i], currentAnneeEtudiant);
 
-			console.log(ue);
 			listUEMatiereEtudiantDOM.append("<li idue="+ue.idUE+" data-role=\"list-divider\">" + ue.nom.toUpperCase() + "</li>");
-
 			for (var j = 0;j < ue.matieres.length; j++){
 				var matiere = new Matiere(ue.matieres[j], ue);
-				matiere.sayHello();
 				var optionText = "";
 				if (matiere.isOption){
 					optionText = " | Option";
@@ -397,8 +383,6 @@ function getNotesCC() {
 		var noteDS = $('#addNoteCCEtudiant #noteCC').val();
 		var noteSurDS = $('#addNoteCCEtudiant #noteSurCC').val();
 		var coeffCC = $('#addNoteCCEtudiant #coeffCC').val();
-		console.log("coeffCC : "+coeffCC);
-
 		var noteMetier = new NoteCC(nom, noteDS, noteSurDS, coeffCC);
 		currentMatiereEtudiant.addNoteCC(noteMetier);
 
@@ -535,9 +519,6 @@ Annee.prototype.actualiserMoyenne = function() {
 	else {
 		this.moyenne = -1.0;
 	}
-	console.log("Moyenne Annee : "+this.moyenne);
-	console.log(rccEtudiant);
-
 	this.isValid = this.checkValid();
 	this.isComplete = this.checkComplete();
 }
@@ -618,7 +599,6 @@ Annee.prototype.getColor = function(){
 
 Annee.prototype.saveDeccoupageMoyenne = function(decoupage){
 	if (decoupage != "NULL"){
-		console.log(decoupage);
 		var totalCoeff = 0;
 		var noteCoefficiente = 0;
 
@@ -766,8 +746,7 @@ UE.prototype.actualiserMoyenne = function(){
 		if(keyA > keyB) return 1;
 		return 0;
 	});
-	console.log("Sorted Array");
-	console.log(array);
+
 	for (var i = 0; i < array.length; i++) {
 		if(array[i].isOption == true){
 			tempNbOptMini--;
@@ -790,7 +769,6 @@ UE.prototype.actualiserMoyenne = function(){
 		this.coefficientUE = totalCoeff;
 		this.moyenne = noteCoefficiente/totalCoeff;
 	}
-	console.log("Moyenne UE : "+this.moyenne);
 	this.annee.saveDeccoupageMoyenne(this.yearType);
 	this.annee.actualiserMoyenne();
 	this.isValid = this.checkValid()
@@ -996,16 +974,11 @@ Matiere.prototype.actualiserMoyenne = function(){
     	return this.moyenne != -1.0;
     }
 
-    Matiere.prototype.sayHello = function(){
-    	console.log("hello from "+this.nom+"| Moyenne : "+this.moyenne+" | My parent is "+this.ue.nom+" | MoyenneUE : "+this.ue.moyenne);
-    };
-
     Matiere.prototype.addNoteCC = function(note){
     	this.notesCC.push(note);
     }
 
     Matiere.prototype.checkValid = function(){
-    	console.log("checkValidMatiere"+(this.moyenne>=this.noteMini));
     	return this.moyenne >= this.noteMini;
     }
 
@@ -1044,22 +1017,17 @@ Matiere.prototype.actualiserMoyenne = function(){
     /* Save & Load Rcc LocalStoralge */
 
     function saveRCCs(){
-    	console.log("Sauvegarde en cours...");
     	var cache = [];
     	localStorage.setItem("rccEtudiant", JSON.stringify(rccEtudiant, function(key, value) {
     		if (typeof value === 'object' && value !== null) {
     			if (cache.indexOf(value) !== -1) {
-            // Circular reference found, discard key
             return;
         }
-        // Store value in our collection
         cache.push(value);
     }
     return value;
 }));
     	cache = null;
-    	console.log("RCCs Sauvegardés !");
-    	console.log(rccEtudiant)
     }
 
     function loadRCCs(){
@@ -1070,24 +1038,18 @@ Matiere.prototype.actualiserMoyenne = function(){
     	rccEtudiant = new Array();
     	for (var i = 0; i < JSON.parse(localStorage.getItem("rccEtudiant")).length; i++){
     		var d = new Diplome(JSON.parse(localStorage.getItem("rccEtudiant"))[i]);
-    		console.log(d);
     		rccEtudiant.push(d);
     	}
-    	console.log(rccEtudiant);
     }
 
     function getPdf(){
-    	console.log("getPdf");
-
     	var doc = new jsPDF('p','pt','letter');
-
     	var decoupages = new Array();
     	var decoupageB = new Array();
     	var moyennesDecoupage = new Array();
     	var credits = new Array();
     	if (currentAnneeEtudiant.decoupage == "NULL") {
     		decoupages = ["NULL"]
-
     	}
     	else if (currentAnneeEtudiant.decoupage == "SEMESTRE") {
     		decoupages = ["SEM1", "SEM2"];
@@ -1103,8 +1065,6 @@ Matiere.prototype.actualiserMoyenne = function(){
     		credits = [currentAnneeEtudiant.creditT1, currentAnneeEtudiant.creditT2, currentAnneeEtudiant.creditT3];
     		resultatsDecoupage = [currentAnneeEtudiant.statusT1, currentAnneeEtudiant.statusT2, currentAnneeEtudiant.statusT3];
     	}
-
-
 
     	doc.setFontSize(25);
     	doc.setFont("helvetica", "bold");
