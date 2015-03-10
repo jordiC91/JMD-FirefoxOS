@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>JMD - Accueil</title>
-        <meta name="theme-color" content="rgb(255,94,58)" />
-      
-        <meta name="description" content="J'ai Mon Diplôme" />
-        <meta name="viewport" content="width=device-width" />
-            
-        <!-- Tag for iOS -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="apple-mobile-web-app-title" content="JMD WebApp">
+<head>
+  <meta charset="utf-8" />
+  <title>JMD - Accueil</title>
+  <meta name="theme-color" content="rgb(255,94,58)" />
 
-        <link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.min.css" />
-        <link rel="stylesheet" href="css/app.css" />
-    </head>
-    <body>
+  <meta name="description" content="J'ai Mon Diplôme" />
+  <meta name="viewport" content="width=device-width" />
+
+  <!-- Tag for iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-title" content="JMD WebApp">
+  <link rel="apple-touch-icon-precomposed" href="img/icons/icon54.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/icon72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/icon114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icons/icon144.png">
+
+  <link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.min.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
 
       <!-- Accueil -->
 
@@ -308,16 +312,17 @@
          </div>
        </div>
 
+       
 <!-- Etudiant -->
 
 <div data-role="page" id="accueilEtudiant">
  <div data-role="header" class="headerTabs" data-position="fixed">
-    <!--<a href="#accueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon ui-title"><p>Retour</p></a> -->
-    <a id="backButtonAccueilEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-     <h1 class="headerTextTabs">Etudiant</h1>
-    <a id="addAnneeEtudiantButton" class="plusButton ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-icon-notext ui-nodisc-icon"></a>
- </div>
- <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <!--<a href="#accueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon ui-title"><p>Retour</p></a> -->
+  <a id="backButtonAccueilEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+  <h1 class="headerTextTabs">Etudiant</h1>
+  <a id="addAnneeEtudiantButton" class="plusButton ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left ui-btn-icon-notext ui-nodisc-icon"></a>
+</div>
+<div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
   <ul id="listRCCEtudiant" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
 
   </ul>
@@ -344,10 +349,10 @@
 
 <div data-role="page" id="choixEtablissementEtudiant">
  <div data-role="header" class="headerTabs" data-position="fixed">
-      <a id="backButtonChoixEtablissementEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-   <h1 class="headerTextTabs">Etablissements</h1>
- </div>
- <div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
+  <a id="backButtonChoixEtablissementEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+  <h1 class="headerTextTabs">Etablissements</h1>
+</div>
+<div data-role="main" class="ui-content ui-nodisc-icon ui-alt-icon">
   <ul data-role="listview" data-inset="false" id="listviewEtabEtudiant" data-icon="false">
 
   </ul>
@@ -368,14 +373,18 @@
 </div>
 </div>
 
-<!-- Liste UEs -->
+<!-- Liste UEs CC -->
 
 <div data-role="page" id="listUEEtudiant">
  <div data-role="header" class="headerTabs" data-position="fixed">
   <a id="backButtonListUEEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-   <h1 class="headerTextTabs">Etudiant</h1>
- </div>
- <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <h1 class="headerTextTabs">Etudiant</h1>
+  <a id="getPDF" class="ui-btn-right" data-role="none"><img src="img/getpdf.svg" alt="Get PDF ?" style="width:30px; height:35px;"/></a>
+</div>
+<div data-role="tabs" id="tabs">
+ <div data-role="navbar" id="selectDecoupage" class="custom-navbar"></div>
+</div>
+<div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
   <ul id="listUEMatiereEtudiant" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
 
   </ul>
@@ -387,27 +396,27 @@
 <div data-role="page" id="editeNoteMatiereEtudiant">
  <div data-role="header" class="headerTabs" data-position="fixed">
   <a id="backButtonEditeNoteMatiereEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-   <h1 class="headerTextTabs">Etudiant</h1>
-      <a id="saveModifMatiere" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
- </div>
- <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <h1 class="headerTextTabs">Etudiant</h1>
+  <a id="saveModifMatiere" class="plusButton ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+</div>
+<div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
   <ul id="editeNoteChampsList" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
     <li class="ui-field-contain">
-        <label for="noteps">Partiel : </label>
-        <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Partiel" name="partiel" data-clear-btn="true"/>
-     </li>
-      <li class="ui-field-contain">
-      <label for="noteps">Coefficient : </label>
-      <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="partiel" data-clear-btn="true"/>
-     </li>
+      <label for="noteps">Partiel : </label>
+      <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Partiel" name="noteps" data-clear-btn="true"/>
+         </li>
     <li class="ui-field-contain">
-      <label for="noteps">Rattrapage : </label>
-      <input id="noteps" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
-     </li>
+      <label for="coefficient">Coefficient : </label>
+      <input id="coefficient" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="coefficient" data-clear-btn="true"/>
+         </li>
+    <li class="ui-field-contain">
+      <div>
+        <label for="noteds">Rattrapage : </label>
+        <input id="noteds" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="noteds" data-clear-btn="true"/>
+      </div>     
+    </li>
     <li data-role="list-divider">Contrôle continu</li>
-    <li class="ui-body ui-body-b">
-      <button id="buttonAddNoteCC" type="submit" class="ui-btn ui-corner-all ui-btn-a ui-icon-plus ui-btn-icon-left">Ajouter une note</button>
-    </li>
+    <li class="ui-body ui-body-b"><button id="buttonAddNoteCC" type="submit" class="ui-btn ui-corner-all ui-btn-a ui-icon-plus ui-btn-icon-left">Ajouter une note</button></li>
   </ul>
 </div>
 </div>
@@ -417,38 +426,42 @@
 <div data-role="page" id="addNoteCCEtudiant">
  <div data-role="header" class="headerTabs" data-position="fixed">
   <a id="backButtonAddNoteCCEtudiant" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
-   <h1 class="headerTextTabs">Ajout d'une note</h1>
-      <a id="saveNoteCC" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
- </div>
- <div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
-  <ul id="editeNoteChampsList" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
+  <h1 class="headerTextTabs">Ajout d'une note</h1>
+  <a id="saveNoteCC" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left">OK</a>
+</div>
+<div data-role="main" class="ui-content ui-alt-icon ui-nodisc-icon">
+  <ul id="addNoteCCChampsList" data-role="listview" data-inset="false" data-divider-theme="a" data-icon="carat-r">
     <li class="ui-field-contain">
-        <label for="nameNoteCC">Nom de la note : </label>
-        <input id="nameNoteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Partiel" name="partiel" data-clear-btn="true"/>
-     </li>
-      <li class="ui-field-contain">
+      <label for="nameNoteCC">Nom de la note : </label>
+      <input id="nameNoteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="DS mi-Semestre" name="partiel" data-clear-btn="true"/>
+         </li>
+    <li class="ui-field-contain">
       <label for="noteCC">Note : </label>
-      <input id="noteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Coefficient" name="partiel" data-clear-btn="true"/>
-     </li>
+      <input id="noteCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="12" name="partiel" data-clear-btn="true"/>
+         </li>
     <li class="ui-field-contain">
       <label for="noteSurCC">Noté sur : </label>
-      <input id="noteSurCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
-     </li>
+      <input id="noteSurCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="20" name="partiel" data-clear-btn="true"/>
+         </li>
     <li class="ui-field-contain">
       <label for="coeffCC">Coefficient : </label>
-      <input id="coeffCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Rattrapage" name="partiel" data-clear-btn="true"/>
-     </li>
+      <input id="coeffCC" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="2" name="partiel" data-clear-btn="true"/>
+         </li>
   </ul>
 </div>
 </div>
-        <script src="js/jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/sha256.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/global.js"></script>
-        <script src="js/admin/admin.js"></script>
-        <script src="js/admin/admin-creation.js"></script>
-        <script src="js/admin/admin-listing.js"></script>
-        <script src="js/etudiant.js"></script>
+<script src="js/jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/sha256.js"></script>
+<script src="js/FileSaver.min.js"></script>
+<script src="js/jspdf.js"></script>
+<script src="js/jspdf.plugin.split_text_to_size.min.js"></script>
+<script src="js/jspdf.plugin.standard_fonts_metrics.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/global.js"></script>
+<script src="js/admin/admin.js"></script>
+<script src="js/admin/admin-creation.js"></script>
+<script src="js/admin/admin-listing.js"></script>
+<script src="js/etudiant.js"></script>
 </body>
 </html>
