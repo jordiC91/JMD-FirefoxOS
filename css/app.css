@@ -62,11 +62,25 @@ p, a, h1 {
 .ui-icon-favori-sel:after {
   background-image: url("../img/star_or.png");
   background-size: 20px 20px;
+  background-color: transparent !important;
 }
 
 .ui-icon-favori:after {
   background-image: url("../img/star.png");
   background-size: 20px 20px;
+  background-color: transparent !important;
+}
+
+.ui-icon-favori-filled-sel:after {
+  background-image: url("../img/star_or_filled.png");
+  background-size: 20px 20px;
+  background-color: transparent !important;
+}
+
+.ui-icon-favori-filled:after {
+  background-image: url("../img/star_filled.png");
+  background-size: 20px 20px;
+  background-color: transparent !important;
 }
 
 .ui-icon-etablissement:after {
