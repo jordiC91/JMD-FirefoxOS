@@ -3,13 +3,12 @@ window.addEventListener('DOMContentLoaded', function() {
     /* Redirection de l'utilisateur vers l'écran qu'il a défini, s'il existe. */
 
     if (localStorage.getItem("accueilChoice") == "etudiant") {
-      $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
+      changePage("accueilEtudiant");
     } else if (localStorage.getItem("accueilChoice") == "administrateur") {
-
       if ((localStorage.getItem("pseudo") != "null") && (localStorage.getItem("token") != "null")) {
-           $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+          changePage("accueilAdmin");
       } else {
-           $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+          changePage("connexion");
       }
     }
 
@@ -21,9 +20,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
         if ((localStorage.getItem("pseudo") != "null") && (localStorage.getItem("token") != "null")) {
-           $.mobile.changePage("#accueilAdmin", { transition: "slideup", changeHash: false });
+          changePage("accueilAdmin");
         } else {
-           $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+          changePage("connexion");
         }
     });
     
@@ -32,10 +31,11 @@ window.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem("accueilChoice", "etudiant");
         }
 
-        $.mobile.changePage("#accueilEtudiant", { transition: "slideup", changeHash: false });
+        changePage("accueilEtudiant");
     });
 });
 
+// Ces méthodes sont globales car utilisées dans toute la partie admin.
 
 /**
  * Méthode permettant de déconnecter l'utilisateur (clear du localstorage et redirection vers la page de connexion).
@@ -46,11 +46,12 @@ function deconnexion() {
 
    sessionStorage.setItem("currentTab", null);
                
-   $.mobile.changePage("#connexion", { transition: "slideup", changeHash: false });
+   changePage("connexion");
 };
 
 /**
- * Méthode permettant de changer de page
+ * Méthode permettant de changer de page.
+ * Utile le jour où on veut 
  */
 function changePage(page) {
    $.mobile.changePage("#" + page, { transition: "slideup", changeHash: false });
@@ -69,6 +70,14 @@ function showLoadingCircle() {
     });
 };
 
+/**
+ * Méthode permettant de cacher un rond de chargement.
+ */
 function hideLoadingCircle() {
     $.mobile.loading('hide');
 }
+
+$(document).on('mobileinit', function () {
+   $.mobile.ignoreContentEnabled = true;
+   $.mobile.defaultPageTransition = "slide";
+});

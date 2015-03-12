@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 
     $(document).on("pageshow","#accueilAdmin", function() {
-      if ((sessionStorage.getItem("currentTab") == null) || (sessionStorage.getItem("currentTab") == "favoris")) {
+      if ((sessionStorage.getItem("currentTab") == "null") || (sessionStorage.getItem("currentTab") == null) || (sessionStorage.getItem("currentTab") == "favoris")) {
         $("#tabFavoris").trigger("click");
       } else if (sessionStorage.getItem("currentTab") == "établissement") {
         $("#tabEtab").trigger("click");
@@ -60,31 +60,36 @@ window.addEventListener('DOMContentLoaded', function() {
         var nom = $("#nomI").val();
         var prenom = $("#prenomI").val();
         var email = $("#emailI").val();
+        var emailAgain = $("#emailAgainI").val();
         var pseudo = $("#pseudoI").val();
         var password = $("#passwordI").val();
         var passwordAgain = $("#passwordAgainI").val();  
 
-        if ((nom.length > 0) && (prenom.length > 0) && (email.length > 0) && (pseudo.length > 0) && (password.length > 0) && (passwordAgain.length > 0)) {
+        if ((nom.length > 0) && (prenom.length > 0) && (email.length > 0) && (emailAgain.length > 0) && (pseudo.length > 0) && (password.length > 0) && (passwordAgain.length > 0)) {
           if (password == passwordAgain) {
-            showLoadingCircle();
+            if (email == emailAgain) {
+              showLoadingCircle();
 
-            $.get(REST_API_URL + "admin/subscription?nom=" + nom + "&prenom=" + prenom + "&email=" + email + "&pseudo=" + pseudo + "&password=" + password, function(datas) {
+              $.get(REST_API_URL + "admin/subscription?nom=" + nom + "&prenom=" + prenom + "&email=" + email + "&pseudo=" + pseudo + "&password=" + password, function(datas) {
+                  hideLoadingCircle();
+                  alert('Succès de l\'inscription.\nVotre compte est maintenant en attente de validation');
+                  changePage("connexion");
+              })
+              .fail(function(jqXHR, textStatus, errorThrown) {
                 hideLoadingCircle();
-                alert('Succès de l\'inscription.\nVotre compte est maintenant en attente de validation');
-                changePage("connexion");
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-              hideLoadingCircle();
 
-              if (jqXHR.status == 403) {
-                alert("Un utilisateur avec ces informations existe déjà.");
-              } else if (jqXHR.status == 500) {
-                alert("Erreur de BDD. Veuillez réessayer.");
-              } else {
-                alert("Erreur inconnue.");
-                console.log(jqXHR);
-              }
-            });
+                if (jqXHR.status == 403) {
+                  alert("Un utilisateur avec ces informations existe déjà.");
+                } else if (jqXHR.status == 500) {
+                  alert("Erreur de BDD. Veuillez réessayer.");
+                } else {
+                  alert("Erreur inconnue.");
+                  console.log(jqXHR);
+                }
+              });
+            } else {
+              alert("Les deux emails entrés ne sont pas identiques.");
+            }
           } else {
             alert("Les deux mots de passe entrés ne sont pas identiques.");
           }
@@ -171,7 +176,7 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var i = 0; i < datas.length; i++) {   
               listeAdmins.push(datas[i]);
 
-              $("#listviewAdminsWaiting").append("<li id=\"listeAdmins-" + datas[i].id + "\">" + datas[i].pseudo + "</li>");
+              $("#listviewAdminsWaiting").append("<li id=\"listeAdmins-" + datas[i].id + "\">" + datas[i].pseudo + "<br /><p>" + datas[i].email + "</p></li>");
             
               $("#listeAdmins-" + datas[i].id).click(function(event) {
                 var pseudoToNominate = listeAdmins[$(this).index()].pseudo;

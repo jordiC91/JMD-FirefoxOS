@@ -87,31 +87,48 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var i = 0; i < datas.length; i++) {   
               listeAnnee.push(datas[i]);
 
-              $("#listviewFavAdmin").append("<li id=\"listeFav-" + datas[i].idAnnee + "\">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "</p></li>");
+              $("#listviewFavAdmin").append("<li id=\"listeFav-" + datas[i].idAnnee + "\">" + datas[i].nom + "<br><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + " <span id=\"listeFavSpan-" + datas[i].idAnnee + "\" class=\"" + ((datas[i].isFollowed) ? "ui-icon-favori-filled-sel" : "ui-icon-favori-filled") + " btnBackground ui-btn-icon-right ui-nodisc-icon\"></span>" + "</p>" + "</li>");
             
+              var datasT = datas[i];
+
               $("#listeFav-" + datas[i].idAnnee).click(function(event) {
+                var diplome = {
+                  idDiplome: "" + datasT.idDiplome,
+                  nomDiplome: "" + datasT.nomDiplome
+                };
+
+                sessionStorage.setItem("diplome", JSON.stringify(diplome)); 
                 sessionStorage.setItem("annee", JSON.stringify(listeAnnee[$(this).index() - 1])); 
-                $.mobile.changePage("#listeUEAdmin", { transition: "slideup", changeHash: false });
+
+                changePage("listeUEAdmin");
               });
 
-              $("#listeFav-" + datas[i].idAnnee).bind("taphold", function (event) {
-                var confirmSuppr = confirm("Voulez-vous vraiment ne plus suivre cette année ?");
+              $("#listeFav-" + datas[i].idAnnee).delegate("span", 'click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-                if (confirmSuppr == true) {
-                    $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnee[$(this).index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
-                      alert("Cette année n'est plus suivie.");
-                    }
-                    .fail(function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status == 401) {
-                          alert("Session expirée.");
-                          deconnexion();
-                        } else if (jqXHR.status == 500) {
-                          alert("Erreur de BDD. Veuillez réessayer.");
-                        } else {
-                          alert("Erreur inconnue.");
-                          console.log(jqXHR);
-                        }
-                    })); 
+                if ($(this).hasClass("ui-icon-favori-filled") == false) { // L'année n'est pas suivie.
+                  $(this).addClass("ui-icon-favori-filled").removeClass("ui-icon-favori-filled-sel");
+
+                  var confirmAdd = confirm("Voulez-vous supprimer cette année de vos favoris ?");
+
+                  if (confirmAdd == true) {
+                      $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnee[$(this).parent().index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                        alert("Cette année n'est plus suivie.");
+                        location.reload();
+                      })
+                      .fail(function(jqXHR, textStatus, errorThrown) {
+                          if (jqXHR.status == 401) {
+                            alert("Session expirée.");
+                            deconnexion();
+                          } else if (jqXHR.status == 500) {
+                            alert("Erreur de BDD. Veuillez réessayer.");
+                          } else {
+                            alert("Erreur inconnue.");
+                            console.log(jqXHR);
+                          }
+                      }); 
+                  }
                 }
               });
             }
@@ -334,18 +351,18 @@ window.addEventListener('DOMContentLoaded', function() {
         $("#listviewChercherAnnee").append("<li id=\"choiceDipAdminLi\">Diplôme</li>");
 
         $("#choiceEtabAdminLi").bind("click", function() {
-          $.mobile.changePage("#choixEtabAdmin", { transition: "slideup", changeHash: false });
+          changePage("choixEtabAdmin");
         });
 
         $("#choiceDipAdminLi").bind("click", function() {
-          $.mobile.changePage("#choixDiplomeAdmin", { transition: "slideup", changeHash: false });
+          changePage("choixDiplomeAdmin");
         });
 
         $("#listviewChercherAnnee").listview("refresh");
 
         $('#autresLinks').hide();
 
-        $("#titleAccueilAdmin").text("Année");
+        $("#titleAccueilAdmin").text("Chercher une année");
 
         $("#btnCreaAccueil").show();
     };
@@ -363,6 +380,8 @@ window.addEventListener('DOMContentLoaded', function() {
         showLoadingCircle();
 
         $.get(REST_API_URL + "annee/getAnnees?idDiplome="+(JSON.parse(sessionStorage.getItem("tempDipA"))).idDiplome+"&idEtablissement="+(JSON.parse(sessionStorage.getItem("tempEtabA"))).idEtablissement, function(datas) {
+          hideLoadingCircle();
+
           $("#listviewChercherAnnee li:nth-child(3)").nextAll("li").remove();
 
           if (datas.length > 0) {
@@ -393,8 +412,6 @@ window.addEventListener('DOMContentLoaded', function() {
           console.log(textStatus);
           console.log(errorThrown);
         }); 
-
-        hideLoadingCircle();
      }
     });
 
@@ -480,7 +497,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $("#titreListeAnnees").text(JSON.parse(sessionStorage.getItem("diplome")).nom);
 
-        $.get(REST_API_URL + "annee/getAnneesByDiplome?idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome, function(datas) {
+        $.get(REST_API_URL + "annee/getAnneesFollowedByDiplome?idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
             hideLoadingCircle();
 
             $('#listviewAnnAdmin').empty();
@@ -490,12 +507,65 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var i = 0; i < datas.length; i++) {
               listeAnnees.push(datas[i]);
 
-              $("#listviewAnnAdmin").append("<li id=\"listeAnn-" + datas[i].idAnnee + "\">" + datas[i].nom + "</li>");
+              $("#listviewAnnAdmin").append("<li id=\"listeAnn-" + datas[i].idAnnee + "\">" + datas[i].nom + "<br /><p>" + datas[i].etablissement.nom + " - " + datas[i].etablissement.ville + "<span id=\"listeAnnSpan-" + datas[i].idAnnee + "\" class=\"" + ((datas[i].isFollowed) ? "ui-icon-favori-filled-sel" : "ui-icon-favori-filled") + " btnBackground ui-btn-icon-right ui-nodisc-icon\"></span></p>" + "</li>");
               
               $("#listeAnn-" + datas[i].idAnnee).click(function(event) {
                 sessionStorage.setItem("annee", JSON.stringify(listeAnnees[$(this).index()])); 
                 changePage("listeUEAdmin");
               });
+
+              $("#listeAnn-" + datas[i].idAnnee).delegate("span", 'click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if ($(this).hasClass("ui-icon-favori-filled")) { // L'année n'est pas suivie.
+                  $(this).addClass("ui-icon-favori-filled-sel").removeClass("ui-icon-favori-filled");
+
+                  var confirmAdd = confirm("Voulez-vous ajouter cette année en favori ?");
+
+                  if (confirmAdd == true) {
+                      $.get(REST_API_URL + "admin/follow?idAnnee=" + listeAnnees[$(this).parent().index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                        alert("Cette année est maintenant suivie.");
+                        $("#listviewAnnAdmin").listview("refresh");
+                      })
+                      .fail(function(jqXHR, textStatus, errorThrown) {
+                          if (jqXHR.status == 403) {
+                            alert("Année déjà suivie.");
+                          } else if (jqXHR.status == 401) {
+                            alert("Session expirée.");
+                            deconnexion();
+                          } else if (jqXHR.status == 500) {
+                            alert("Erreur de BDD. Veuillez réessayer.");
+                          } else {
+                            alert("Erreur inconnue.");
+                            console.log(jqXHR);
+                          }
+                      }); 
+                  }
+                } else { // L'année est suivie.
+                  $(this).addClass("ui-icon-favori-filled").removeClass("ui-icon-favori-filled-sel");
+
+                  var confirmAdd = confirm("Voulez-vous supprimer cette année de vos favoris ?");
+
+                  if (confirmAdd == true) {
+                      $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnees[$(this).parent().index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                        alert("Cette année n'est plus suivie.");
+                        $("#listviewAnnAdmin").listview("refresh");
+                      })
+                      .fail(function(jqXHR, textStatus, errorThrown) {
+                          if (jqXHR.status == 401) {
+                            alert("Session expirée.");
+                            deconnexion();
+                          } else if (jqXHR.status == 500) {
+                            alert("Erreur de BDD. Veuillez réessayer.");
+                          } else {
+                            alert("Erreur inconnue.");
+                            console.log(jqXHR);
+                          }
+                      }); 
+                  }
+                }
+              }); 
 
               $("#listeAnn-" + datas[i].idAnnee).bind("taphold", function (event) {
                 var confirmSuppr = confirm("Voulez-vous supprimer cette année ?");
@@ -556,6 +626,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
             $('#listviewUEAdmin').empty();
 
+            if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "NULL") {
+              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">CONTRÔLE CONTINU</li>");
+            } else if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "SEMESTRE") {
+              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">SEMESTRES</li>");
+            } else if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "TRIMESTRE") {
+              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">TRIMESTRES</li>");
+            }
+
             var listeUE = [];
             
             for (var i = 0; i < datas.length; i++) {
@@ -564,7 +642,7 @@ window.addEventListener('DOMContentLoaded', function() {
               $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
                 
               $("#listeUE-" + datas[i].idUE).click(function(event) {
-                sessionStorage.setItem("ue", JSON.stringify(listeUE[$(this).index()])); 
+                sessionStorage.setItem("ue", JSON.stringify(listeUE[$(this).index() - 1])); 
                 changePage("listeMatAdmin");
               });
 
@@ -573,7 +651,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (confirmSuppr == true) {
                   $.ajax({
-                     url: REST_API_URL + 'ue?id=' + listeUE[$(this).index()].idUE + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                     url: REST_API_URL + 'ue?id=' + listeUE[$(this).index() - 1].idUE + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                      type: 'DELETE',
                      statusCode: {
                         200: function() {

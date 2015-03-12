@@ -73,13 +73,11 @@
                 </div>
                 <div id="tab5">
                   <ul data-role="listview" id="autresLinks">
-                    <li></li>
                     <li><a href="#nommerAdmin">Nommer un administrateur</a></li>
                     <li style="padding: 0">
                       <input name="radioNotifMail" data-iconpos="right" id="radioNotifMail" checked="checked" type="checkbox">
                       <label for="radioNotifMail">Notifications par mail</label>
                     </li>
-                    <li></li>
                     <li><a id="cloturerCompte" class="importantLink">Clôturer votre compte</a></li>
                   </ul>
                 </div>
@@ -129,7 +127,7 @@
       
       <div data-role="page" id="connexion">
          <div data-role="header" class="headerTabs">
-           <a href="#accueil" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Accueil</a>
+           <a href="#accueil" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">Connexion</h1>
          </div>
          <div data-role="main" class="ui-content">
@@ -150,15 +148,18 @@
 
       <div data-role="page" id="inscription">
          <div data-role="header" class="headerTabs">
-           <a href="#connexion" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
+           <a href="#connexion" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs">Inscription</h1>
            <a id="btnInscriptionValider" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
          <div data-role="main" class="ui-content">
             <input id="nomI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
             <input id="prenomI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Prénom" name="prenom" />
-            <input id="emailI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Email" name="email" />
             <input id="pseudoI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Pseudo" name="pseudo" />
+            <br />
+            <input id="emailI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Email" name="email" />
+            <input id="emailAgainI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Retapez votre email" name="emailAgain" />
+            <br />
             <input id="passwordI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Mot de passe" name="password" />
             <input id="passwordAgainI" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="password" placeholder="Retapez votre mot de passe" name="passwordAgain" />
          </div>
@@ -228,12 +229,45 @@
               <select name="selectEtabCreaAnnee" id="selectEtabCreaAnnee">
 
               </select>
+              <select name="selectDipCreaAnnee" id="selectDipCreaAnnee">
+
+              </select>
            </div>
            
            <input id="nomAnn" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
            <input type="checkbox" name="isLastYear" id="isLastYear" class="custom" />
            <label for="isLastYear">Dernière année du diplôme</label>
            <select name="decoupageAnnee" id="decoupageAnnee">
+              <option value="aucun">Aucun</option>
+              <option value="semestre">Semestre</option>
+              <option value="trimestre">Trimestre</option>
+           </select>
+         </div>
+      </div>
+
+      <!-- Page dupliquée pour éviter un problème de redirection que je n'arrive pas à régler. -->
+
+      <div data-role="page" id="createAnneeAdminHome">
+         <div data-role="header" class="headerTabs">
+           <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Annuler</a>
+           <h1 class="headerTextTabs">Nouvelle année</h1>
+           <a id="btnCreateAnnAdminHome" class="ui-btn-right ui-btn ui-icon-check ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
+         </div>
+         <div data-role="main" class="ui-content">
+           <div data-role="fieldcontain" style="width: 100%">
+              <label for="selectEtabCreaAnneeHome" class="select"></label>
+              <select name="selectEtabCreaAnneeHome" id="selectEtabCreaAnneeHome">
+
+              </select>
+              <select name="selectDipCreaAnneeHome" id="selectDipCreaAnneeHome">
+
+              </select>
+           </div>
+           
+           <input id="nomAnnHome" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nomHome" />
+           <input type="checkbox" name="isLastYearHome" id="isLastYearHome" class="custom" />
+           <label for="isLastYearHome">Dernière année du diplôme</label>
+           <select name="decoupageAnneeHome" id="decoupageAnneeHome">
               <option value="aucun">Aucun</option>
               <option value="semestre">Semestre</option>
               <option value="trimestre">Trimestre</option>
@@ -249,6 +283,9 @@
          </div>
          <div data-role="main" class="ui-content">
            <input id="nomUE" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nom" name="nom" />
+           <select name="selectDecoupageUECreaUE" id="selectDecoupageUECreaUE">
+
+           </select>
            <input id="nbOptionsMini" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Nombre d'option(s) minimum" name="nbOptionsMini" />
            <input id="moyenneMini" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" type="text" placeholder="Moyenne minimale" name="moyenneMini" />
          </div>
@@ -275,7 +312,7 @@
       
       <div data-role="page" id="listeAnneeAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#accueilAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+           <a href="#accueilAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 id="titreListeAnnees" class="headerTextTabs">Années</h1>
            <a href="#createAnneeAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -288,7 +325,7 @@
       
       <div data-role="page" id="listeUEAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeAnneeAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+           <a href="#listeAnneeAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs" id="titreUEAdminPage">UE</h1>
            <a href="#createUEAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -301,7 +338,7 @@
       
       <div data-role="page" id="listeMatAdmin">
          <div data-role="header" class="headerTabs">
-           <a href="#listeUEAdmin" class="backButton ui-btn ui-btn-inline ui-icon-carat-l ui-btn-icon-left ui-nodisc-icon">Retour</a>
+           <a href="#listeUEAdmin" class="ui-btn-left ui-btn ui-icon-carat-l ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
            <h1 class="headerTextTabs" id="titreMatiereAdminPage">Matières</h1>
            <a href="#createMatiereAdmin" class="ui-btn-right ui-btn ui-icon-plus ui-btn-icon-notext ui-nodisc-icon btnBackground"></a>
          </div>
@@ -452,6 +489,7 @@
 </div>
 <script src="js/jquery/jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery/jquery.mobile-1.4.5.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/hammer.min.js"></script>
 <script src="js/sha256.min.js"></script>
 <script src="js/FileSaver.min.js"></script>
 <script src="js/jspdf/jspdf.min.js"></script>
