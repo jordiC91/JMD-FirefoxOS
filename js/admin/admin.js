@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', function() {
         } else {    
             showLoadingCircle();
 
-            $.post(REST_API_URL + "admin/login", {username: pseudo, password: $.sha256(password)}, function(data) {
+            $.post(REST_API_URL + "admin/ffoslogin", {username: pseudo, password: $.sha256(password), token:localStorage.getItem("tokenDevice")}, function(data) {
                hideLoadingCircle();
 
                localStorage.setItem("token", data);
