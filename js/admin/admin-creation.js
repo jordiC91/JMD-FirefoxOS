@@ -151,6 +151,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     $("#btnCreateAnnAdmin").click(function(event) {
         var nom = $("#nomAnn").val();
+        var idDiplome = $("#selectDipCreaAnnee option:selected").val();
         var idEtablissement = $("#selectEtabCreaAnnee option:selected").val();
         var isLastYear = $("#isLastYear").is(":checked");
 
@@ -166,7 +167,7 @@ window.addEventListener('DOMContentLoaded', function() {
           showLoadingCircle();
 
           $.ajax({
-             url: REST_API_URL + 'annee?nom=' + nom + "&idDiplome=" + JSON.parse(sessionStorage.getItem("diplome")).idDiplome + "&idEtablissement=" + idEtablissement + "&decoupage=" + decoupage + "&isLastYear=" + isLastYear + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+             url: REST_API_URL + 'annee?nom=' + nom + "&idDiplome=" + idDiplome + "&idEtablissement=" + idEtablissement + "&decoupage=" + decoupage + "&isLastYear=" + isLastYear + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
              type: 'PUT',
              statusCode: {
                 200: function() {
@@ -188,7 +189,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     alert("Erreur de BDD. Veuillez réessayer.");
                 }
              }
-          }); 
+          });
         } else {
           alert("Au moins un des champs est vide.");
         }
@@ -370,7 +371,7 @@ window.addEventListener('DOMContentLoaded', function() {
             showLoadingCircle();
 
             $.ajax({
-               url: REST_API_URL + 'matiere?nom=' + nom + "&idUE=" + JSON.parse(sessionStorage.getItem("ue")).idUE + "&isRattrapable=" + isRattrapable + ((noteMini.length > 0) ? "&noteMini=" + noteMini : "") + "&isOption=" + isOption + "&coefficient=" + coeff + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+               url: REST_API_URL + 'matiere?nom=' + nom + "&isRattrapable=" + isRattrapable + ((noteMini.length > 0) ? "&noteMini=" + noteMini : "") + "&isOption" + isOption + "&coefficient=" + coeff + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                type: 'PUT',
                statusCode: {
                   200: function() {
@@ -388,7 +389,7 @@ window.addEventListener('DOMContentLoaded', function() {
                       alert("Erreur de BDD. Veuillez réessayer.");
                   }
                }
-            }); 
+            });
           } else {
             alert("Le coefficient doit être un nombre.");
           }

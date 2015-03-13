@@ -608,10 +608,7 @@ window.addEventListener('DOMContentLoaded', function() {
         .fail(function(jqXHR, textStatus, errorThrown) {
             hideLoadingCircle();
 
-            if (jqXHR.status == 401) {
-              alert("Session expirée.");
-              deconnexion();
-            } else if (jqXHR.status == 500) {
+            if (jqXHR.status == 500) {
               alert("Erreur de BDD. Veuillez réessayer.");
             } else {
               alert("Erreur inconnue.");
@@ -638,86 +635,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
             if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "NULL") {
               $("#listviewUEAdmin").append("<li data-role=\"list-divider\">CONTRÔLE CONTINU</li>");
-
-              for (var i = 0; i < datas.length; i++) {
-                $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-              }
-
-              if (datas.length == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
             } else if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "SEMESTRE") {
-              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">SEMESTRE 1</li>");
-
-              var nbS1 = 0;
-              var nbS2 = 0;
-
-              for (var i = 0; i < datas.length; i++) {
-                if (datas[i].yearType == "SEM1") {
-                  $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-                  nbS1++;
-                }
-              }
-
-              if (nbS1 == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
-
-              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">SEMESTRE 2</li>");
-
-              for (var i = 0; i < datas.length; i++) {
-                if (datas[i].yearType == "SEM2") {
-                  $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-                  nbS2++;
-                }
-              }
-
-              if (nbS2 == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
+              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">SEMESTRES</li>");
             } else if (JSON.parse(sessionStorage.getItem("annee")).decoupage == "TRIMESTRE") {
-              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">TRIMESTRE 1</li>");
-
-              var nbT1 = 0;
-              var nbT2 = 0;
-              var nbT3 = 0;
-
-              for (var i = 0; i < datas.length; i++) {
-                if (datas[i].yearType == "TRI1") {
-                  $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-                  nbT1++;
-                }
-              }
-
-              if (nbT1 == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
-
-              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">TRIMESTRE 2</li>");
-
-              for (var i = 0; i < datas.length; i++) {
-                if (datas[i].yearType == "TRI2") {
-                  $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-                  nbT2++;
-                }
-              }
-
-              if (nbT2 == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
-
-              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">TRIMESTRE 3</li>");
-
-              for (var i = 0; i < datas.length; i++) {
-                if (datas[i].yearType == "TRI3") {
-                  $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
-                  nbT3++;
-                }
-              }
-
-              if (nbT3 == 0) {
-                $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
-              } 
+              $("#listviewUEAdmin").append("<li data-role=\"list-divider\">TRIMESTRES</li>");
             }
 
             var listeUE = [];
@@ -725,9 +646,10 @@ window.addEventListener('DOMContentLoaded', function() {
             for (var i = 0; i < datas.length; i++) {
               listeUE.push(datas[i]);
 
-              $("#listeUE-" + datas[i].idUE).click(function(event) {
-                sessionStorage.setItem("ue", JSON.stringify(listeUE[search($(this).text(), listeUE)])); 
+              $("#listviewUEAdmin").append("<li id=\"listeUE-" + datas[i].idUE + "\">" + datas[i].nom + "</li>");
                 
+              $("#listeUE-" + datas[i].idUE).click(function(event) {
+                sessionStorage.setItem("ue", JSON.stringify(listeUE[$(this).index() - 1])); 
                 changePage("listeMatAdmin");
               });
 
@@ -755,6 +677,10 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
               });
             }
+
+            if (datas.length == 0) {
+              $("#listviewUEAdmin").append("<li>Aucune UE.</li>");
+            } 
 
             $("#listviewUEAdmin").listview("refresh");
         })

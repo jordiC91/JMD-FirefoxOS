@@ -1,4 +1,67 @@
 window.addEventListener('DOMContentLoaded', function() {
+  //Enregistrement du token
+    if (navigator.push) {
+      // Request the endpoint. This uses PushManager.register().
+      if (localStorage.getItem("tokenDevice") == null){
+        var req = navigator.push.register();
+        
+        req.onsuccess = function(e) {
+          var endpoint = req.result;
+            console.log("New endpoint: " + endpoint );
+
+            var token = endpoint.replace("https://updates.push.services.mozilla.com/update/", "");
+            console.log(token);
+            localStorage.setItem("tokenDevice", token);
+          }
+
+         req.onerror = function(e) {
+           console.error("Error getting a new endpoint: " + JSON.stringify(e));
+         }
+      }
+    } 
+
+    // En cas de changement du PUSH REGISTER (MOZILLA SIDE)
+    if (window.navigator.mozSetMessageHandler) {
+      window.navigator.mozSetMessageHandler('push-register', function(e) {
+        console.log('push-register received, I need to register my endpoint(s) again!');
+
+        var req = navigator.push.register();
+        req.onsuccess = function(e) {
+          var endpoint = req.result;
+          var newToken = endpoint.replace("https://updates.push.services.mozilla.com/update/", "");
+
+          if (newToken != localStorage.getItem("tokenDevice")){
+            $.get(REST_API_URL + "admin/updateTokenFFOS?old="+localStorage.getItem("tokenDevice")+"&new="+newToken, function(datas) {
+                console.log(datas);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+                console.log(errorThrown);
+            }); 
+          }
+        }
+        req.onerror = function(e) {
+          console.error("Error getting a new endpoint: " + JSON.stringify(e));
+        }
+      });
+    }
+
+    // Notification en approche
+    if (window.navigator.mozSetMessageHandler) {
+        window.navigator.mozSetMessageHandler('push', function(e) {
+        $.get(REST_API_URL + "admin/lastMessage?token="+localStorage.getItem("tokenDevice"), function(datas) {
+            console.log(datas);
+            if (Notification.permission === "granted") {
+              var options = {body:datas, icon:"img/icons/icon48x48.png"};
+              var notification = new Notification("JMD",options);
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+            console.log(errorThrown);
+        }); 
+      }); 
+      } else {
+        // No message handler
+      }
 
     // Enregistrement du token
     if (navigator.push) {
