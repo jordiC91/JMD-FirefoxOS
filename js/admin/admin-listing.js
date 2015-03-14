@@ -1,7 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
 
-    /* Autre. */
+    /* Page "Autre". */
 
+    // Fonction permettant d'initialiser le contenu de l'onglet "Autre" sur l'accueil admin.
     function listenerAutreTab() {
         showLoadingCircle();
 
@@ -25,6 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $("#btnCreaAccueil").hide();
 
+        // Permet de savoir si l'utilisateur accepte les mails ou non afin de cocher ou non la checkbox de l'écran.
         $.get(REST_API_URL + "admin/isMailAccepted?pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
             hideLoadingCircle();
 
@@ -51,8 +53,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
     $("#tabAutre").bind("click", listenerAutreTab);
 
-    /* Liste des favoris. */
+    /* Page "Liste des favoris". */
 
+    // Fonction permettant d'initialiser le contenu de l'onglet "Favoris" sur l'accueil admin.
     function initFavAdmin() {
         showLoadingCircle();
 
@@ -156,8 +159,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
     $("#tabFavoris").bind("click", initFavAdmin);
     
-    /* Liste des établissements. */
+    /* Page "Liste des établissements". */
     
+    // Fonction permettant d'initialiser le contenu de l'onglet "Etablissement" sur l'accueil admin.
     function initEtabAdmin() {
         showLoadingCircle();
 
@@ -180,6 +184,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $("#btnCreaAccueil").show();
 
+        // Permet de récupérer l'ensemble des établissements de l'application.
         $.get(REST_API_URL + "etablissement/getAll", function(datas) {
             hideLoadingCircle();
 
@@ -239,8 +244,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
     $("#tabEtab").bind("click", initEtabAdmin);
     
-    /* Liste des diplômes. */
+    /* Page "Liste des diplômes". */
     
+    // Fonction permettant d'initialiser le contenu de l'onglet "Diplôme" sur l'accueil admin.
     function initDipAdmin() {
         showLoadingCircle();
 
@@ -263,6 +269,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         $("#btnCreaAccueil").show();
 
+        // Permet de récupérer l'ensemble des diplômes de l'application.
         $.get(REST_API_URL + "diplome/getAll", function(datas) {
             hideLoadingCircle();
 
@@ -761,16 +768,6 @@ window.addEventListener('DOMContentLoaded', function() {
               console.log(jqXHR);
             }
         }); 
-    };
-
-    function search(key, ueArray) {
-      for (var i = 0; i < ueArray.length; i++) {
-        if (key == ueArray[i].nom) {
-          return i;
-        }
-      }
-
-      return -1;
     };
     
     /* Liste des matières. */

@@ -1,5 +1,9 @@
 window.addEventListener('DOMContentLoaded', function() {
 
+    /*
+     * Listener du bouton "+" sur l'accueil côté admin.
+     * Permet de rediriger l'utilisateur vers la bonne page de création selon où il se trouve.
+     */
     $("#btnCreaAccueil").click(function(event) {
         var newPage;
 
@@ -294,6 +298,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Création d'une UE. */
 
+    // Permet d'initialiser la liste du découpage de l'UE selon le découpage de l'année.
     $(document).on("pageshow","#createUEAdmin",function() {
         $('#selectDecoupageUECreaUE').empty();  
 

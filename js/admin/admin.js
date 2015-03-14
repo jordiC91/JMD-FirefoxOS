@@ -1,9 +1,11 @@
 window.addEventListener('DOMContentLoaded', function() {
 
+    // Listener du bouton "Retour" de la page accueil côté admin.
     $("#btnBackAccueil").click(function(event) {  
       deconnexion();
     });
 
+    // Permet de rediriger l'utilisateur vers le bon onglet sur l'accueil admin.
     $(document).on("pageshow","#accueilAdmin", function() {
       if ((sessionStorage.getItem("currentTab") == "null") || (sessionStorage.getItem("currentTab") == null) || (sessionStorage.getItem("currentTab") == "favoris")) {
         $("#tabFavoris").trigger("click");
@@ -18,8 +20,9 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    /* Connexion. */
+    /* Page "Connexion". */
     
+    // Listener du bouton "Connexion" sur la page de connexion.
     $("#btnConnexion").click(function(event) {  
         var pseudo = $("#pseudo").val();
         var password = $("#password").val();
@@ -54,8 +57,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* Inscription. */
+    /* Page "Inscription". */
 
+    // Listener du bouton "Inscription" sur le page d'inscription.
     $("#btnInscriptionValider").click(function(event) {
         var nom = $("#nomI").val();
         var prenom = $("#prenomI").val();
@@ -98,8 +102,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* Mot de passe oublié. */
+    /* Page "Mot de passe oublié". */
 
+    // Listener du bouton "Valider" sur la page.
     $("#btnPasswordOublieValider").click(function(event) {
         var pseudo = $("#pseudoM").val();
 
@@ -128,7 +133,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* Clôturer le compte. */
+    /* Option "Clôturer le compte" sur l'onglet "Autre". */
 
     $("#cloturerCompte").click(function(event) {
         var confirmSuppr = confirm("Voulez-vous vraiment clôturer votre compte ?");
@@ -157,7 +162,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }  
     });
 
-    /* Nommer un administrateur. */
+    /* Page "Nommer un administrateur". */
 
     $(document).on("pageshow","#nommerAdmin",function() {
        initAdminsWaiting();
@@ -166,6 +171,7 @@ window.addEventListener('DOMContentLoaded', function() {
     function initAdminsWaiting() {
         showLoadingCircle();
 
+        // Permet de récupérer tous les admins en attente de validation.
         $.get(REST_API_URL + "admin/getAllAdminInactive", function(datas) {
             hideLoadingCircle();
 
@@ -228,10 +234,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Notifications par mail. */
 
+    // Listener de la checkbox "Accepter les mails".
     $("#radioNotifMail").change(function() {
       showLoadingCircle();
 
-      if ($("#radioNotifMail").is(":checked")) { // Coché
+      if ($("#radioNotifMail").is(":checked")) { // La checkox vient d'être cochée.
         $.ajax({
              url: REST_API_URL + "admin/acceptMail?newValue=true&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
              type: 'PUT',

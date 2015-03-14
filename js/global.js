@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
-  //Enregistrement du token
+
+    // Enregistrement du token
     if (navigator.push) {
       // Request the endpoint. This uses PushManager.register().
       if (localStorage.getItem("tokenDevice") == null){
@@ -77,20 +78,22 @@ window.addEventListener('DOMContentLoaded', function() {
 
     /* Accueil. */
     
+    // Listener du bouton "Administrateur" sur l'accueil de l'application.
     $("#adminChoice").click(function(event) {
-        if ($("#rememberChoice").is(":checked")) {
+        if ($("#rememberChoice").is(":checked")) { // Si la checkbox pour se souvenir du choix est coché, on sauve le choix.
           localStorage.setItem("accueilChoice", "administrateur");
         }
 
         if ((localStorage.getItem("pseudo") != "null") && (localStorage.getItem("token") != "null")) {
-          changePage("accueilAdmin");
+          changePage("accueilAdmin"); // L'utilisateur est déjà connecté, on le dirige vers l'accueil du côté admin.
         } else {
-          changePage("connexion");
+          changePage("connexion"); 
         }
     });
     
+    // Listener du bouton "Etudiant" sur l'accueil de l'application.
     $("#etudiantChoice").click(function(event) {
-        if ($("#rememberChoice").is(":checked")) {
+        if ($("#rememberChoice").is(":checked")) { // Si la checkbox pour se souvenir du choix est coché, on sauve le choix.
           localStorage.setItem("accueilChoice", "etudiant");
         }
 
@@ -101,7 +104,8 @@ window.addEventListener('DOMContentLoaded', function() {
 // Ces méthodes sont globales car utilisées dans toute la partie admin.
 
 /**
- * Méthode permettant de déconnecter l'utilisateur (clear du localstorage et redirection vers la page de connexion).
+ * Méthode permettant de déconnecter l'utilisateur.
+ * Cclear du localstorage et redirection vers la page de connexion.
  */
 function deconnexion() {
    localStorage.setItem("pseudo", null);
@@ -144,3 +148,19 @@ $(document).on('mobileinit', function () {
    $.mobile.ignoreContentEnabled = true;
    $.mobile.defaultPageTransition = "slide";
 });
+
+/**
+ * Méthode permettant de parcourir un tableau d'objet et de chercher la position d'une clé ("nom").
+ *
+ * @param key La clé à chercher.
+ * @param ueArray Le tableau à parcourir.
+ */
+function search(key, ueArray) {
+    for (var i = 0; i < ueArray.length; i++) {
+      if (key == ueArray[i].nom) {
+         return i;
+      }
+    }
+
+   return -1;
+};
