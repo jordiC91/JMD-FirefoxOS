@@ -531,7 +531,7 @@ window.addEventListener('DOMContentLoaded', function() {
                   var confirmAdd = confirm("Voulez-vous ajouter cette année en favori ?");
 
                   if (confirmAdd == true) {
-                      $.get(REST_API_URL + "admin/follow?idAnnee=" + listeAnnees[$(this).parent().index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                      $.get(REST_API_URL + "admin/follow?idAnnee=" + listeAnnees[$(this).parent().index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
                         alert("Cette année est maintenant suivie.");
                         $("#listviewAnnAdmin").listview("refresh");
                       })
@@ -555,7 +555,7 @@ window.addEventListener('DOMContentLoaded', function() {
                   var confirmAdd = confirm("Voulez-vous supprimer cette année de vos favoris ?");
 
                   if (confirmAdd == true) {
-                      $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnees[$(this).parent().index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
+                      $.get(REST_API_URL + "admin/unfollow?idAnnee=" + listeAnnees[$(this).parent().index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(), function(datas) {
                         alert("Cette année n'est plus suivie.");
                         $("#listviewAnnAdmin").listview("refresh");
                       })
@@ -579,7 +579,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                 if (confirmSuppr == true) {
                     $.ajax({
-                       url: REST_API_URL + 'annee?id=' + listeAnnees[$(this).index()].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
+                       url: REST_API_URL + 'annee?id=' + listeAnnees[$(this).index() - 1].idAnnee + "&pseudo=" + localStorage.getItem("pseudo") + "&token=" + localStorage.getItem("token") + "&timestamp=" + new Date().getTime(),
                        type: 'DELETE',
                        statusCode: {
                           200: function() {
