@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', function() {
           var newToken = endpoint.replace("https://updates.push.services.mozilla.com/update/", "");
 
           if (newToken != localStorage.getItem("tokenDevice")){
-            $.get(REST_API_URL + "admin/updateTokenFFOS?old="+localStorage.getItem("tokenDevice")+"&new="+newToken, function(datas) {
+            $.post(REST_API_URL + "admin/updateTokenFFOS", {old:localStorage.getItem("tokenDevice"), new:newToken} , function(datas) {
                 console.log(datas);
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
